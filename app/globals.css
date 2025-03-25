@@ -20,3 +20,30 @@
     --foreground: #ededed;
   }
 }
+.bg-gradiant-pink-spot-1 {
+  /* background: rgb(0, 212, 255); */
+  background: radial-gradient(
+    ellipse at center,
+    #d406c3 -40%,
+    transparent,
+    transparent
+  );
+}
+.bg-gradiant-blue-spot-1 {
+  /* background: rgb(0, 212, 255); */
+  background: radial-gradient(
+    ellipse at center,
+    #06b6d4 -45%,
+    transparent,
+    transparent
+  );
+}
+.bg-gradiant-blue-spot-2 {
+  /* background: rgb(0, 212, 255); */
+  background: radial-gradient(
+    ellipse at center,
+    #06b6d4 -25%,
+    rgba(0, 212, 255, 0.25),
+    transparent 50%
+  );
+}
