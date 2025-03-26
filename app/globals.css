@@ -21,7 +21,6 @@
   }
 }
 .bg-gradiant-pink-spot-1 {
-  /* background: rgb(0, 212, 255); */
   background: radial-gradient(
     ellipse at center,
     #d406c3 -40%,
@@ -30,7 +29,6 @@
   );
 }
 .bg-gradiant-blue-spot-1 {
-  /* background: rgb(0, 212, 255); */
   background: radial-gradient(
     ellipse at center,
     #06b6d4 -45%,
@@ -39,11 +37,24 @@
   );
 }
 .bg-gradiant-blue-spot-2 {
-  /* background: rgb(0, 212, 255); */
   background: radial-gradient(
     ellipse at center,
     #06b6d4 -25%,
     rgba(0, 212, 255, 0.25),
     transparent 50%
+  );
+}
+
+.bg-conic-gradient {
+  background: conic-gradient(from -99deg, #262626 0%, #55a6c6 12%, #262626 0%);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(
+    farthest-corner at 70px 5px,
+    #4d97cf 1%,
+    #4d97cf 5%,
+    #262626 27%,
+    #262626
   );
 }
