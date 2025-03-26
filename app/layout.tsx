@@ -26,10 +26,9 @@ export default function RootLayout({
         className={`${geistSans.className} dark bg-background antialiased -z-50 text-white`}
       >
         <Provider>
-          <div className="relative h-full w-full -z-50 ">
+          <div className="relative h-full w-full -z-50 m-10 ">
             <NavbarSection />
-            <div className="z-30 ">{children}</div>
-
+            <div className=" relative z-30 ">{children}</div>
             {/* gradiant spot */}
             <GradiantSpot />
           </div>
