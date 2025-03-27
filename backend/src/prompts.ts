@@ -276,3 +276,5 @@ Here are some examples of correct usage of artifacts:
 </examples>
 `;
 
+export const getTempleteSysPrompt = "Decide from user prompt which programming language is choosen from three options i.e. 'reactjs', 'nodejs' and 'nextjs'. Just return single word from the options. And if you think user prompt is not related to programming language then just return 'unknown'."
+
