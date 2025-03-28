@@ -5,7 +5,7 @@ import { nextJsPrompt } from "../template/next";
 import { nodePrompt } from "../template/node";
 import { reactPrompt, stylingBasePrompt } from "../template/react";
 
-export const templateCreate = async (req:Request, res:Response) => {
+export const templateCreate = async (req: Request, res: Response) => {
   const { prompt } = req.body;
   if (!prompt) {
     res.status(400).json({
@@ -47,15 +47,16 @@ export const templateCreate = async (req:Request, res:Response) => {
     return;
   }
 
+  // there is still improvement needed here
   res.json({
     success: true,
     message: "Done!!",
-    prompt:
+    prompts:
       ans === "reactjs"
-        ? { reactPrompt, stylingBasePrompt }
+        ? { prompt: reactPrompt, uiPrompt: stylingBasePrompt }
         : ans === "nodejs"
-        ? { nodePrompt }
-        : { nextJsPrompt, stylingBasePrompt },
+        ? { prompt: nodePrompt }
+        : { prompt: nextJsPrompt, uiPrompt: stylingBasePrompt },
   });
   return;
 };
