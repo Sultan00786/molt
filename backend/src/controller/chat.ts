@@ -9,9 +9,11 @@ export const chat = async (req: Request, res: Response) => {
     history: [
       {
         role: "user",
-        parts: messages
-          .map((message) => ({ text: message.content }))
-          .filter((obj, i) => i !== messages.length - 1),
+        parts: [{ text: messages[0].content }],
+      },
+      {
+        role: "user",
+        parts: [{ text: messages[0].content }],
       },
     ],
     config: {
@@ -21,6 +23,9 @@ export const chat = async (req: Request, res: Response) => {
 
   const response = await mltiChats.sendMessage({
     message: messages[messages.length - 1].content,
+    config: {
+      systemInstruction: getSystemPrompt(),
+    },
   });
 
   // console.log(response.text);
