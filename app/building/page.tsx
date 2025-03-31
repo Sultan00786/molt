@@ -1,4 +1,5 @@
 "use client";
+import MonacoCodeEditor from "@/components/ui/code/MonacoCodeEditor";
 import GradiantTextarea from "@/components/ui/custom/GradiantTextarea";
 import { ScrollShadow } from "@heroui/react";
 
@@ -20,7 +21,9 @@ function page() {
             <GradiantTextarea classNames="w-full h-[140px]" />
           </div>
         </div>
-        <div className="w-[60%] border-2"></div>
+        <div className="w-[60%] border-2">
+          <MonacoCodeEditor />
+        </div>
       </div>
     </div>
   );
