@@ -5,7 +5,7 @@ import { ScrollShadow } from "@heroui/react";
 
 function page() {
   return (
-    <div className="h-screen w-full relative ">
+    <div className="h-screen w-full relative z-40">
       <div className="pt-14 h-fit border-b-1 border-gray-700"></div>
       <div className=" h-[93%] flex gap-2">
         <div className=" w-[40%] flex flex-col items-center ">
@@ -21,7 +21,7 @@ function page() {
             <GradiantTextarea classNames="w-full h-[140px]" />
           </div>
         </div>
-        <div className="w-[60%] border-2">
+        <div className="w-[60%] h-full border-2">
           <MonacoCodeEditor />
         </div>
       </div>
