@@ -16,23 +16,38 @@ export const chat = async (req: Request, res: Response) => {
         parts: [{ text: messages[0].content }],
       },
     ],
-    config: {
-      systemInstruction: getSystemPrompt(),
-    },
   });
 
   const response = await mltiChats.sendMessage({
     message: messages[messages.length - 1].content,
     config: {
       systemInstruction: getSystemPrompt(),
+      responseMimeType: "application/json",
     },
   });
 
-  // console.log(response.text);
+  if (!response) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong, LLM is not responding",
+    });
+    return;
+  }
+
+  if (!response.text) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong, LLM is not responding",
+    });
+    return;
+  }
+
+  const strResponse = response.text;
+  console.log(strResponse);
 
   res.json({
     success: true,
-    response: response.text,
+    response: JSON.parse(strResponse),
   });
   return;
 };

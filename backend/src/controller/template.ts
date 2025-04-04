@@ -20,6 +20,7 @@ export const templateCreate = async (req: Request, res: Response) => {
     contents: prompt,
     config: {
       systemInstruction: getTempleteSysPrompt,
+      // responseMimeType: "application/json",
     },
   });
 
