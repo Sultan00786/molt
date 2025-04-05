@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
-import express, {Express} from "express";
+import express, { Express } from "express";
 import { templateCreate } from "./controller/template";
 import { chat } from "./controller/chat";
 
