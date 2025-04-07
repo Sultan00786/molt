@@ -506,6 +506,8 @@ ULTRA IMPORTANT: Do NOT be verbose and DO NOT explain anything unless the user i
 
 ULTRA IMPORTANT: Think first and reply with the artifact that contains all necessary steps to set up the folder, files, shell commands to run. It is SUPER IMPORTANT to respond with this first.
 
+ULTRA IMPORTANT: The array must be ordered with all folder objects first, followed by all file objects.
+
 Here are some examples of correct usage of artifacts:
 
 <examples>
@@ -750,6 +752,177 @@ export default App;
     command: "npm run dev",
   },
 ]
+    </assistant_response>
+  </example>
+  <example>
+    <user_query>
+      {
+        role: "user",
+        parts: [{ text: "create next to do app" }],
+      }
+    </user_query>
+
+    <assistant_response>
+     [
+  {
+    type: "folder",
+    title: "app",
+    children: [
+      {
+        type: "file",
+        title: "globals.css",
+        path: "app/globals.css",
+        extension: "css",
+        Language: "css",
+        code: "@tailwind base;\n@tailwind components;\n@tailwind utilities;",
+      },
+      {
+        type: "file",
+        title: "layout.tsx",
+        path: "app/layout.tsx",
+        extension: "tsx",
+        Language: "typescript",
+        code: "import './globals.css';\nimport type { Metadata } from 'next';\nimport { Inter } from 'next/font/google';\n\nconst inter = Inter({ subsets: ['latin'] });\n\nexport const metadata: Metadata = {\n  title: 'My Next App',\n  description: 'A clean Next.js starter template',\n};\n\nexport default function RootLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <html lang=\"en\">\n      <body className={inter.className}>{children}</body>\n    </html>\n  );\n}",
+      },
+      {
+        type: "file",
+        title: "page.tsx",
+        path: "app/page.tsx",
+        extension: "tsx",
+        Language: "typescript",
+        code: 'export default function Home() {\n  return (\n    <main className="flex min-h-screen items-center justify-center">\n      <h1 className="text-4xl font-bold">Welcome to My Next App!</h1>\n    </main>\n  );\n}',
+      },
+    ],
+  },
+  {
+    type: "folder",
+    title: "components",
+    children: [
+      {
+        type: "folder",
+        title: "ui",
+        children: [
+          {
+            type: "file",
+            title: "button.tsx",
+            path: "components/ui/button.tsx",
+            extension: "tsx",
+            Language: "typescript",
+            code: "import { ButtonHTMLAttributes } from 'react';\nimport { cn } from '@/lib/utils';\n\nexport function Button({ className, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {\n  return <button className={cn('px-4 py-2 bg-blue-500 text-white rounded', className)} {...props} />;\n}",
+          },
+          {
+            type: "file",
+            title: "card.tsx",
+            path: "components/ui/card.tsx",
+            extension: "tsx",
+            Language: "typescript",
+            code: "import { ReactNode } from 'react';\n\nexport function Card({ children }: { children: ReactNode }) {\n  return <div className=\"p-4 border rounded shadow-sm bg-white\">{children}</div>;\n}",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: "folder",
+    title: "config",
+    children: [
+      {
+        type: "file",
+        title: "site.ts",
+        path: "config/site.ts",
+        extension: "ts",
+        Language: "typescript",
+        code: "export const siteConfig = {\n  name: 'My Next App',\n  description: 'A Next.js starter project',\n};",
+      },
+      {
+        type: "file",
+        title: "theme.ts",
+        path: "config/theme.ts",
+        extension: "ts",
+        Language: "typescript",
+        code: "export const theme = {\n  primaryColor: '#4f46e5',\n};",
+      },
+    ],
+  },
+  {
+    type: "folder",
+    title: "lib",
+    children: [
+      {
+        type: "file",
+        title: "constants.ts",
+        path: "lib/constants.ts",
+        extension: "ts",
+        Language: "typescript",
+        code: "export const APP_NAME = 'My Next App';",
+      },
+      {
+        type: "file",
+        title: "utils.ts",
+        path: "lib/utils.ts",
+        extension: "ts",
+        Language: "typescript",
+        code: "export function cn(...classes: string[]) {\n  return classes.filter(Boolean).join(' ');\n}",
+      },
+    ],
+  },
+  {
+    type: "file",
+    title: ".env.local",
+    path: ".env.local",
+    extension: "env",
+    Language: "env",
+    code: "NEXT_PUBLIC_API_URL=http://localhost:3000/api",
+  },
+  {
+    type: "file",
+    title: "next.config.js",
+    path: "next.config.js",
+    extension: "js",
+    Language: "javascript",
+    code: "/** @type {import('next').NextConfig} */\nconst nextConfig = {};\n\nmodule.exports = nextConfig;",
+  },
+  {
+    type: "file",
+    title: "package.json",
+    path: "package.json",
+    extension: "json",
+    Language: "json",
+    code: '{\n  "name": "my-next-app",\n  "version": "0.1.0",\n  "private": true,\n  "scripts": {\n    "dev": "next dev",\n    "build": "next build",\n    "start": "next start",\n    "lint": "next lint"\n  },\n  "dependencies": {\n    "next": "14.0.0",\n    "react": "18.3.1",\n    "react-dom": "18.3.1",\n    "tailwindcss": "^3.4.1"\n  },\n  "devDependencies": {\n    "autoprefixer": "^10.4.18",\n    "postcss": "^8.4.35",\n    "typescript": "^5.5.3"\n  }\n}',
+  },
+  {
+    type: "file",
+    title: "postcss.config.js",
+    path: "postcss.config.js",
+    extension: "js",
+    Language: "javascript",
+    code: "module.exports = {\n  plugins: {\n    tailwindcss: {},\n    autoprefixer: {},\n  },\n};",
+  },
+  {
+    type: "file",
+    title: "tailwind.config.js",
+    path: "tailwind.config.js",
+    extension: "js",
+    Language: "javascript",
+    code: "module.exports = {\n  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],\n  theme: {\n    extend: {},\n  },\n  plugins: [],\n};",
+  },
+  {
+    type: "file",
+    title: "tsconfig.json",
+    path: "tsconfig.json",
+    extension: "json",
+    Language: "json",
+    code: '{\n  "compilerOptions": {\n    "target": "esnext",\n    "lib": ["dom", "dom.iterable", "esnext"],\n    "allowJs": true,\n    "skipLibCheck": true,\n    "strict": true,\n    "forceConsistentCasingInFileNames": true,\n    "noEmit": true,\n    "esModuleInterop": true,\n    "module": "esnext",\n    "moduleResolution": "bundler",\n    "resolveJsonModule": true,\n    "isolatedModules": true,\n    "jsx": "preserve",\n    "incremental": true,\n    "baseUrl": ".",\n    "paths": {\n      "@/*": ["./*"]\n    }\n  },\n  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],\n  "exclude": ["node_modules"]\n}',
+  },
+  {
+    type: "shell",
+    command: "npm install",
+  },
+  {
+    type: "shell",
+    command: "npm run dev",
+  },
+];
     </assistant_response>
   </example>
 </examples>
