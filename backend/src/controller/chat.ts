@@ -13,7 +13,7 @@ export const chat = async (req: Request, res: Response) => {
       },
       {
         role: "user",
-        parts: [{ text: messages[0].content }],
+        parts: [{ text: messages[1].content }],
       },
     ],
   });
@@ -43,8 +43,6 @@ export const chat = async (req: Request, res: Response) => {
   }
 
   const strResponse = response.text;
-  console.log(strResponse);
-
   res.json({
     success: true,
     response: JSON.parse(strResponse),
