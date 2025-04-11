@@ -3,7 +3,7 @@ import { gemini, MessageType, ModelType } from "..";
 import { getSystemPrompt } from "../prompts";
 
 export const chat = async (req: Request, res: Response) => {
-  const messages: MessageType = req.body.messages;
+  const messages: MessageType = JSON.parse(req.body.messages);
   const mltiChats = gemini.chats.create({
     model: process.env.GEMINI_MODEL as ModelType,
     history: [
