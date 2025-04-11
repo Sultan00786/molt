@@ -1,5 +1,6 @@
 "use client";
-import { fetchTemplate } from "@/service/operations/fetchTemplate";
+import { fetchChat, fetchTemplate } from "@/service/operations";
+import { chatMessage } from "@/types/prompt";
 import { Button } from "@heroui/button";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
@@ -7,13 +8,24 @@ import { FaArrowRight } from "react-icons/fa6";
 function GradiantTextarea({ classNames = "" }: { classNames: string }) {
   // const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState("");
-  const handleTextAreaChange = async () => {
+  const handlePush = async () => {
     const templateResponse = await fetchTemplate(text);
     console.log(templateResponse);
     if (templateResponse == null) return;
 
     // todo hit chat endpoint
+    const message: chatMessage[] = Object.values(templateResponse)
+      .map((promt) => promt)
+      .reverse()
+      .map((promt) => ({
+        role: "user",
+        content: promt as string,
+      }));
+    console.log("message", message);
+    const chatResponse = await fetchChat(message);
+    console.log(chatResponse);
   };
+
   return (
     <div
       className={`${classNames} relative flex flex-col items-center bg-radial-gradient p-[1px] rounded-lg`}
@@ -26,7 +38,7 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
         }}
         onKeyUp={(e) => {
           if (e.key === "Enter" && text.length !== 0) {
-            handleTextAreaChange();
+            handlePush();
           }
         }}
       ></textarea>
@@ -40,7 +52,7 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
           color="primary"
           variant="solid"
           className={`${text.length !== 0 ? "" : "hidden"}`}
-          onPress={handleTextAreaChange}
+          onPress={handlePush}
         >
           <FaArrowRight />
         </Button>
