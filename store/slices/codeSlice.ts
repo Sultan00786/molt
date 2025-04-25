@@ -1,16 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { CodeState } from "@/types/store/sliceTypes";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const codeInitialState = {
+const codeInitialState:CodeState = {
   codeCall: false,
-  templateCode: null,
+  chatCode: null,
 };
 
 const codeSlice = createSlice({
   name: "code",
   initialState: codeInitialState,
   reducers: {
-    setCodeCall(state, value) {
-      state.codeCall = value.payload;
+    setCodeCall(state, action: PayloadAction<boolean>) {
+      state.codeCall = action.payload;
     },
   },
 });
