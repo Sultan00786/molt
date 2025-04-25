@@ -21,7 +21,7 @@ function page() {
             <GradiantTextarea classNames="w-full h-[140px]" />
           </div>
         </div>
-        <div className="w-[60%] h-full border-2 flex">
+        <div className="w-[60%] h-full border-1 flex">
           <div className="w-[30%] border-r-1 bg-[#1e1e1e] border-zinc-700/80"></div>
           <div className=" w-full h-full">
             <MonacoCodeEditor />

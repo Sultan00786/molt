@@ -1,5 +1,5 @@
 "use client";
-import { fetchChat, fetchTemplate } from "@/service/operations";
+import { fetchChat, fetchTemplate } from "@/api-service/operations";
 import { chatMessage } from "@/types/prompt";
 import { Button } from "@heroui/button";
 import { useState } from "react";
@@ -9,6 +9,7 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
   // const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState("");
   const handlePush = async () => {
+    
     const templateResponse = await fetchTemplate(text);
     console.log(templateResponse);
     if (templateResponse == null) return;
