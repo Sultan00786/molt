@@ -24,5 +24,5 @@ const codeSlice = createSlice({
   },
 });
 
-export const {} = codeSlice.actions;
+export const {setChatCode, setCodeCall, setTemplate} = codeSlice.actions;
 export default codeSlice.reducer;
