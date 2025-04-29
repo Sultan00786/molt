@@ -1,6 +1,6 @@
 "use client";
-import { fetchChat, fetchTemplate } from "@/api-service/operations";
-import { chatMessage } from "@/types/prompt";
+import { getNewChat } from "@/lib/utils";
+import { useAppDispatch } from "@/store";
 import { Button } from "@heroui/button";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
@@ -8,23 +8,9 @@ import { FaArrowRight } from "react-icons/fa6";
 function GradiantTextarea({ classNames = "" }: { classNames: string }) {
   // const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState("");
+  const dispatch = useAppDispatch();
   const handlePush = async () => {
-    
-    const templateResponse = await fetchTemplate(text);
-    console.log(templateResponse);
-    if (templateResponse == null) return;
-
-    // todo hit chat endpoint
-    const message: chatMessage[] = Object.values(templateResponse)
-      .map((promt) => promt)
-      .reverse()
-      .map((promt) => ({
-        role: "user",
-        content: promt as string,
-      }));
-    console.log("message", message);
-    const chatResponse = await fetchChat(message);
-    console.log(chatResponse);
+    await getNewChat(text, dispatch)
   };
 
   return (
