@@ -1,6 +1,7 @@
-import { ChatItem } from "../prompt";
+import { ChatItem, chatMessage } from "../prompt";
 
 export interface CodeState {
-   codeCall: boolean;
-   chatCode: ChatItem[] | null;
+  codeCall: boolean;
+  template: chatMessage[] | null;
+  chatCode: ChatItem[] | null;
 }
