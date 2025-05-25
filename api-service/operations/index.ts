@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ENDPONT_URL } from "../api";
-import { chatMessage } from "@/types/prompt";
+import { ChatItem, chatMessage } from "@/types/prompt";
 
 export const fetchTemplate = async (prompt: string) => {
   try {
@@ -16,7 +16,7 @@ export const fetchTemplate = async (prompt: string) => {
   }
 };
 
-export const fetchChat = async (messages: chatMessage[]) => {
+export const fetchChat = async (messages: chatMessage[]): Promise<ChatItem[] | null> => {
   try {
     const messagesStr = JSON.stringify(messages);
     const response = await axios.post(`${ENDPONT_URL.chat}`, {
