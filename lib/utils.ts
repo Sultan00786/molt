@@ -1,5 +1,5 @@
 import { fetchChat, fetchTemplate } from "@/api-service/operations";
-import { setTemplate } from "@/store/slices/codeSlice";
+import { setChatCode, setTemplate } from "@/store/slices/codeSlice";
 import { chatMessage } from "@/types/prompt";
 import { Dispatch } from "@reduxjs/toolkit";
 import { clsx, type ClassValue } from "clsx";
@@ -28,4 +28,5 @@ export async function getNewChat(text:string, dispatch: Dispatch) {
     
     const chatResponse = await fetchChat(message);
     console.log(chatResponse);
+    dispatch(setChatCode(chatResponse));
 }

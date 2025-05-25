@@ -14,7 +14,7 @@ export type ChatItem = FolderItem | FileItem | ShellItem;
 export type FolderItem = {
   type: ItemType.Folder;
   title: string;
-  children: FileItem[];
+  children: ChatItem[];
 };
 
 export type FileItem = {
