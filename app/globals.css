@@ -1,6 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* font */
+
+.heading1 {
+  font-family: "Lora", serif;
+  font-size: 48px;
+  line-height: 125%;
+  letter-spacing: 1px;
+}
+
+.heading2 {
+  font-family: "Lora", serif;
+  font-size: 36px;
+  line-height: 125%;
+}
+
+.heading3 {
+  font-family: "Lora", serif;
+  font-size: 28px;
+  line-height: 125%;
+}
+
+.heading4 {
+  font-family: "Lora", serif;
+  font-size: 20px;
+  line-height: 125%;
+}
+
+.body1 {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 1.4px;
+  font-weight: 400;
+}
+
+.body2 {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 2px;
+}
+
+.body3 {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 2px;
+}
 
 .bg-gradiant-pink-spot-1 {
   background: radial-gradient(
