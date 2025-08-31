@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.className} dark bg-background antialiased text-white`}
+        className={`${geistSans.className} bg-richblack-990 font-inter text-white`}
       >
         <Provider>
           <div className="relative h-full w-full overflow-hidden ">

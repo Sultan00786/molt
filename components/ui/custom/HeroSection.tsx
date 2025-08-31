@@ -5,8 +5,10 @@ function HeroSection() {
     <div className="h-screen w-full pt-14 bg-transparent">
       <div className="flex flex-col items-center pt-[180]">
         <div className="text-center flex flex-col gap-2">
-          <h1 className="heading1 font-bold">Ready to bring ideas to life?</h1>
-          <h3 className="body1 font-semibold text-richblue-300/50">
+          <h1 className="text-heading1 font-lora font-bold">
+            Ready to bring ideas to life?
+          </h1>
+          <h3 className="text-body1 font-semibold text-richblue-300/40">
             Build apps and websites effortlessly with just a conversation
           </h3>
         </div>
