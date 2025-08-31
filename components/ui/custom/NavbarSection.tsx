@@ -11,7 +11,7 @@ const geistSans = Noto_Sans({
 
 function NavbarSection() {
   return (
-    <div className="flex items-center justify-between px-2 py-3 fixed top-0 left-0 right-0 z-50 ">
+    <div className="flex items-center justify-between px-2 py-3 z-50 ">
       <Link
         href="/"
         className="flex items-center gap-1 text-white cursor-pointer"

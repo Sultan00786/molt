@@ -23,16 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.className} bg-richblack-990 font-inter text-white`}
+        className={`${geistSans.className} bg-richblack-990 font-inter relative -z-40 overflow-x-hidden text-white`}
       >
         <Provider>
           <div className="relative h-full w-full overflow-hidden ">
             <NavbarSection />
             <div className=" relative z-30 overflow-hidden">{children}</div>
-            {/* gradiant spot */}
-            <GradiantSpot classNames="fixed" />
           </div>
         </Provider>
+        {/* gradiant spot */}
+        <GradiantSpot classNames="absolute" />
       </body>
     </html>
   );

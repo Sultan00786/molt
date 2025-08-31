@@ -8,7 +8,7 @@ function HeroSection() {
           <h1 className="text-heading1 font-lora font-bold">
             Ready to bring ideas to life?
           </h1>
-          <h3 className="text-body1 font-semibold text-richblue-300/40">
+          <h3 className="text-body1 font-semibold text-richblue-300/50">
             Build apps and websites effortlessly with just a conversation
           </h3>
         </div>

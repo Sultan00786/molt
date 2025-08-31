@@ -4,28 +4,34 @@
 @tailwind utilities;
 
 .bg-gradiant-pink-spot-1 {
+  width: 323px;
+  height: 248px;
+  filter: blur(34px);
   background: radial-gradient(
-    ellipse at center,
-    #d406c3 -40%,
-    transparent,
-    transparent
+    50% 50% at 50% 50%,
+    rgba(176, 3, 207, 0.74) 2%,
+    rgba(2, 64, 105, 0) 100%
   );
 }
 .bg-gradiant-blue-spot-1 {
+  width: 358px;
+  height: 274px;
+  filter: blur(34px);
   background: radial-gradient(
-    ellipse at center,
-    #06b6d4 -45%,
-    transparent,
-    transparent
+    50% 50% at 50% 50%,
+    rgba(3, 126, 207, 1) 7%,
+    rgba(2, 97, 160, 0.4) 25%,
+    rgba(2, 64, 105, 0) 100%
   );
 }
 .bg-gradiant-blue-spot-2 {
   background: radial-gradient(
     ellipse at center,
-    #06b6d4 -25%,
-    rgba(0, 212, 255, 0.25),
-    transparent 50%
+    #037ecf 7%,
+    #0261a04e 25%,
+    transparent 100%
   );
+  filter: blur(78px);
 }
 
 .bg-conic-gradient {
