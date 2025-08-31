@@ -10,7 +10,21 @@ module.exports = {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        lora: ["Lora", "serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+      fontSize: {
+        heading1: ["48px", { lineHeight: "125%", letterSpacing: "1px" }],
+        heading2: ["36px", { lineHeight: "125%" }],
+        heading3: ["28px", { lineHeight: "125%" }],
+        heading4: ["20px", { lineHeight: "125%" }],
+        body1: ["16px", { lineHeight: "150%", letterSpacing: "0.8px" }],
+        body2: ["14px", { lineHeight: "150%" }],
+        body3: ["12px", { lineHeight: "150%" }],
+      },
+    },
     colors: {
       white: "#fff",
       black: "#000",
