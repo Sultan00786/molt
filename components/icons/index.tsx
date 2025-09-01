@@ -1,26 +1,26 @@
 import {
-  FolderOpen,
-  FilePlus2,
-  Figma,
+  ArrowDown,
   ArrowRight,
-  Crown,
+  ArrowUpRight,
   Bookmark,
+  CodeXml,
+  Crown,
+  Figma,
+  FilePlus2,
+  FolderOpen,
+  History,
+  Lightbulb,
+  LightbulbIcon,
+  MonitorSmartphone,
+  RotateCw,
+  Search,
+  SquareDashedMousePointer,
   ThumbsDown,
   ThumbsUp,
-  RotateCw,
-  Lightbulb,
-  ArrowUpRight,
-  Search,
-  MonitorSmartphone,
-  ArrowDown,
-  CodeXml,
-  LightbulbIcon,
-  SquareDashedMousePointer,
-  History,
 } from "lucide-react";
-import { BsStars, BsGithub } from "react-icons/bs";
+import { BsStars } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
-import { IoEarth } from "react-icons/io5";
+import { IoEarth, IoLogoGithub } from "react-icons/io5";
 
 export const iconsObj = {
   FolderOpen: FolderOpen,
@@ -43,8 +43,8 @@ export const iconsObj = {
   ArrowDown: ArrowDown,
   FaMicrophone: FaMicrophone,
   BsStars: BsStars,
-  BsGithub: BsGithub,
   IoEarth: IoEarth,
+  IoLogoGithub: IoLogoGithub,
 };
 
 export type IconName = keyof typeof iconsObj;
@@ -64,15 +64,26 @@ export const Icon = ({
 }) => {
   const IconComponent = iconsObj[iconName];
   return (
-    <div>
+    <div
+      // for react-icon
+      style={{
+        width: `${w}px`,
+        height: `${h ?? w}px`,
+      }}
+    >
       <IconComponent
+        // for lucide
         width={w ? w : 16}
         height={h ? h : 16}
         strokeWidth={strokeWidth ? strokeWidth : 1}
+        // for react-icon
+        style={{
+          width: `${w}px`,
+          height: `${h ?? w}px`,
+          fontSize: `${w}px`,
+        }}
         className={className}
       />
-      {/* <IoEarth width={w} height={h} strokeWidth={2} />  
-      <Crown width={w} height={h} strokeWidth={2} /> */}
-    </div>
+      </div>
   );
 };
