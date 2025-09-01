@@ -6,10 +6,10 @@
 .bg-gradiant-pink-spot-1 {
   width: 323px;
   height: 248px;
-  filter: blur(34px);
+  filter: blur(54px);
   background: radial-gradient(
     50% 50% at 50% 50%,
-    rgba(176, 3, 207, 0.74) 2%,
+    rgba(176, 3, 207, 0.598) 2%,
     rgba(2, 64, 105, 0) 100%
   );
 }
@@ -31,7 +31,7 @@
     #0261a04e 25%,
     transparent 100%
   );
-  filter: blur(78px);
+  filter: blur(98px);
 }
 
 .bg-conic-gradient {
