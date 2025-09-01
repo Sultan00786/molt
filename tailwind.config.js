@@ -21,8 +21,8 @@ module.exports = {
         heading3: ["28px", { lineHeight: "125%" }],
         heading4: ["20px", { lineHeight: "125%" }],
         body1: ["16px", { lineHeight: "150%", letterSpacing: "0.8px" }],
-        body2: ["14px", { lineHeight: "150%" }],
-        body3: ["12px", { lineHeight: "150%" }],
+        body2: ["14px", { lineHeight: "150%", letterSpacing: "0.8px" }],
+        body3: ["12px", { lineHeight: "150%", letterSpacing: "0.8px" }],
       },
     },
     colors: {
