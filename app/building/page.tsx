@@ -18,7 +18,7 @@ function page() {
             <Content />
           </ScrollShadow>
           <div className=" w-[34%] fixed bottom-4 left-12">
-            <GradiantTextarea classNames="w-full h-[140px]" />
+            <GradiantTextarea classNames="w-full min-h-[140px]" />
           </div>
         </div>
         <div className="w-[60%] h-full border-1 flex">

@@ -44,11 +44,11 @@ export const Button: FC<ButtonProps> = ({
         }
         ${
           variant === "variant3" &&
-          " bg-richblack-500/25 hover:bg-richblack-500/40 py-1 px-2"
+          " bg-richblack-500/25 hover:bg-richblack-500/50 py-1 px-2"
         }
         ${
           variant === "variant4" &&
-          "bg-richblack-500/25 hover:bg-richblack-500/40 py-1 px-1"
+          "bg-richblack-500/25 hover:bg-richblack-500/50 py-1 px-1"
         }
         ${variant === "variant5" && "py-1 px-2"}
         ${variant === "variant6" && "py-1 px-1"}
@@ -87,7 +87,7 @@ export const Button: FC<ButtonProps> = ({
               ${iconClassName} 
               ${
                 variant === "variant6" || variant === "variant5"
-                  ? "text-white/50 hover:text-white"
+                  ? "text-white/55 hover:text-white"
                   : "text-white"
               }`}
           />
