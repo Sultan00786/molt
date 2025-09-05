@@ -14,7 +14,7 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
 
   return (
     <div
-      className={`${classNames} relative flex flex-col items-center bg-radial-gradient pt-[1px] pb-[0.5px] px-[1px] rounded-[5px]`}
+      className={`${classNames} h-[150px] relative flex flex-col items-center bg-radial-gradient pt-[1px] pb-[0.5px] px-[1px] rounded-[5px]`}
     >
       <div className=" w-full h-full bg-richblack-990 rounded-[5px] ">
         <div className=" w-full h-full flex flex-row gap-2 items-center bg-richblack-900/40 p-4">
@@ -70,16 +70,18 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-14">
-            <Button
-              isLabel={false}
-              isIcon={true}
-              iconName="ArrowRight"
-              iconWidth={20}
-              iconHeight={20}
-              iconStrokeWidth={2}
-              variant="variant2"
-            />
+          <div className="flex flex-col h-full justify-between gap-14">
+            <div className="opacity-0">
+              <Button
+                isLabel={false}
+                isIcon={true}
+                iconName="ArrowRight"
+                iconWidth={20}
+                iconHeight={20}
+                iconStrokeWidth={2}
+                variant="variant2"
+              />
+            </div>
             <Button
               isLabel={false}
               isIcon={true}
@@ -92,21 +94,6 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
           </div>
         </div>
       </div>
-
-      {/* push */}
-      {/* <div className="absolute top-4 right-4">
-        <Button
-          isIconOnly={true}
-          radius="sm"
-          size="md"
-          color="primary"
-          variant="solid"
-          className={`${text.length !== 0 ? "" : "hidden"}`}
-          onPress={handlePush}
-        >
-          <FaArrowRight />
-        </Button>
-      </div> */}
     </div>
   );
 }

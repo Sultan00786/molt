@@ -2,8 +2,8 @@ import GradiantTextarea from "./GradiantTextarea";
 
 function HeroSection() {
   return (
-    <div className="h-screen w-full pt-14 bg-transparent">
-      <div className="flex flex-col items-center pt-[180]">
+    <div className="h-full w-full pt-[200px] bg-transparent">
+      <div className="flex flex-col items-center gap-8">
         <div className="text-center flex flex-col gap-2">
           <h1 className="text-heading1 font-lora font-bold">
             Ready to bring ideas to life?
@@ -12,8 +12,8 @@ function HeroSection() {
             Build apps and websites effortlessly with just a conversation
           </h3>
         </div>
-        <div className=" mt-8">
-          <GradiantTextarea classNames="w-[500px] h-[150px]" />
+        <div className="w-[540px]">
+          <GradiantTextarea classNames="w-full" />
         </div>
       </div>
       <div>
