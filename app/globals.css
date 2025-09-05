@@ -1,34 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .bg-gradiant-pink-spot-1 {
+  width: 323px;
+  height: 248px;
+  filter: blur(54px);
   background: radial-gradient(
-    ellipse at center,
-    #d406c3 -40%,
-    transparent,
-    transparent
+    50% 50% at 50% 50%,
+    rgba(176, 3, 207, 0.598) 2%,
+    rgba(2, 64, 105, 0) 100%
   );
 }
 .bg-gradiant-blue-spot-1 {
+  width: 358px;
+  height: 274px;
+  filter: blur(34px);
   background: radial-gradient(
-    ellipse at center,
-    #06b6d4 -45%,
-    transparent,
-    transparent
+    50% 50% at 50% 50%,
+    rgba(3, 126, 207, 1) 7%,
+    rgba(2, 97, 160, 0.4) 25%,
+    rgba(2, 64, 105, 0) 100%
   );
 }
 .bg-gradiant-blue-spot-2 {
   background: radial-gradient(
     ellipse at center,
-    #06b6d4 -25%,
-    rgba(0, 212, 255, 0.25),
-    transparent 50%
+    #037ecf 7%,
+    #0261a04e 25%,
+    transparent 100%
   );
+  filter: blur(98px);
 }
 
 .bg-conic-gradient {
-  background: conic-gradient(from -99deg, #262626 0%, #55a6c6 12%, #262626 0%);
+  background: conic-gradient(
+    from 99deg,
+    rgba(64, 66, 69, 1) 0%,
+    rgba(59, 177, 255, 1) 26%,
+    rgba(64, 66, 69, 1) 0%
+  );
 }
 
 .bg-radial-gradient {
@@ -39,4 +51,15 @@
     #262626 27%,
     #262626
   );
+}
+
+/* Hide scrollbar for Chrome, Safari, and Edge */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
