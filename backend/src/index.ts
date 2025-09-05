@@ -15,22 +15,22 @@ dotenv.config();
 const app: Express = express();
 app.use(express.json());
 
-const corpsOption = {
-  origin: ["http://localhost:3000"],
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "Accept",
-    "Origin",
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Origin",
-    "Access-Control-Allow-Credentials",
-  ],
-};
+// const corpsOption = {
+//   origin: ["http://localhost:3000"],
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   allowedHeaders: [
+//     "Content-Type",
+//     "Authorization",
+//     "Accept",
+//     "Origin",
+//     "Access-Control-Allow-Headers",
+//     "Access-Control-Allow-Origin",
+//     "Access-Control-Allow-Credentials",
+//   ],
+// };
 
-app.use(cors(corpsOption));
+app.use(cors());
 
 export type MessageType = { role: string; content: string }[];
 
