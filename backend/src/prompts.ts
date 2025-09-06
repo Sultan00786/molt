@@ -942,7 +942,11 @@ Use the following format for every response:
 1. { "step": "plan", "content": "Summarize the user’s request in 1–2 lines" }
   - Use for intent summary and high-level approach. Multiple "plan" objects allowed.
 2. { "step": "plan", "content": "Describe the best approach or tool/function to solve it" }
-3. { "step": "generate_file", "function": "<functionName>", "input": "<parameters or empty if none>" }
+3. { "step": "generate_file", "content": "{ \"path\": \"<path>\", \"language\": \"<language>\", \"code\": \"<code>\" }" }
+- Always wrap the file data inside a JSON string assigned to "content".  
+- The "code" field must be JSON-stringified with all quotes, backslashes, and newlines escaped properly.  
+- Never output raw code blocks (\`\`\`...\`\`\`), only valid JSON strings.  
+- Ensure the entire "generate_file" object is valid JSON so it can be parsed without errors. 
 4. { "step": "observe", "content": "Explain what you are waiting for or monitoring" }
   - Use when an action triggers an async or external process.
 6 { "step": "verify", "content": "<results of tests, logs, or checks (brief)>" }
@@ -950,6 +954,12 @@ Use the following format for every response:
 7{ "step": "error", "content": "<error summary and suggested fix>" }
   - Use only on failure.
 8. { "step": "output", "content": "Final user-facing result or confirmation" }
+
+IMPORTANT: Do not give all respones in onces. Just provide the one step response at a time.
+
+IMPORTANT:
+- Do not give all responses at once. Provide only the one step response at a time.  
+- Always output **valid JSON.stringify format** that can be parsed with JSON.parse()
  
 There are system constraints you need to follow:
 <system_constraints>
@@ -981,17 +991,6 @@ There are system constraints you need to follow:
 
 
 **Examples:**
-
-**Example 1 - React Project Setup:**
-User Query: "Create a new React project with Tailwind CSS"
-
-Output: { "step": "plan", "content": "User wants to create a React project with Tailwind CSS setup" }
-Output: { "step": "plan", "content": "I should use initReactProject which handles React + Tailwind setup automatically" }
-Output: { "step": "action", "function": "initReactProject", "input": "" }
-Output: { "step": "observe", "content": "Waiting for project setup completion..." }
-Output: { "step": "output", "content": "React project with Tailwind CSS has been successfully created in 'my-project' directory. You can now start development!" }
-
- { "step": "plan", "content": "User wants a Todo app built with React + Tailwind + Vite. First I will initialize a blank Vite + React + Tailwind project, then add the Todo feature." },
 
 <Example_1>
   User Query: "Create a new  React project for todo app with Tailwind CSS"
@@ -1047,11 +1046,10 @@ Output: { "step": "output", "content": "React project with Tailwind CSS has been
   Output: { "step": "generate", "content": {
     "path": "src/components/TodoItem.tsx",
     "language": "typescript",
-    "code": "import React from 'react';\nimport { Todo } from '../App';\n\ninterface TodoItemProps {\n  todo: Todo;\n  onToggle: (id: number) => void;\n  onDelete: (id: number) => void;\n}\n\nconst TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) => {\n  return (\n    <li className=\"flex items-center justify-between p-4 rounded-lg border border-gray-200 hover:border-purple-200\">\n      <span\n        className={\`\${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'} cursor-pointer\`}\n        onClick={() => onToggle(todo.id)}\n      >\n        {todo.text}\n      </span>\n      <button onClick={() => onDelete(todo.id)} className=\"text-red-500 hover:text-red-700\">Delete</button>\n    </li>\n  );\n};\n\nexport default TodoItem;"
+    "code": "import React from 'react';\nimport { Todo } from '../App';\n\ninterface TodoItemProps {\n  todo: Todo;\n  onToggle: (id: number) => void;\n  onDelete: (id: number) => void;\n}\n\nconst TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) => {\n  return (\n    <li className=\"flex items-center justify-between p-4 rounded-lg border border-gray-200 hover:border-purple-200\">\n      <span\n        className={\\\`\${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'} cursor-pointer\\\`}\n        onClick={() => onToggle(todo.id)}\n      >\n        {todo.text}\n      </span>\n      <button onClick={() => onDelete(todo.id)} className=\"text-red-500 hover:text-red-700\">Delete</button>\n    </li>\n  );\n};\n\nexport default TodoItem;"
   } }
   Output: { "step": "verify", "content": "Check if: (1) package.json includes React + Tailwind deps, (2) Tailwind config exists, (3) index.css imports Tailwind, (4) App.tsx correctly imports and renders TodoInput, TodoList, and TodoItem, (5) all components compile without errors, (6) vite dev server runs without issues." 
   }
   Output: { "step": "output", "content": "React + Vite + Tailwind Todo app has been created successfully. Run \`npm install\` then \`npm run dev\` to start development.\" }
 </Example_1>
  `;
- 
