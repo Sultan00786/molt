@@ -957,8 +957,11 @@ Use the following format for every response:
 8. { "step": "output", "content": "Final user-facing result or confirmation" }
   - It is final step
 
+IMPORTANT: Provide only the one step output response at a time.
+
 IMPORTANT:
-- Do not give all responses at once. Provide only the one step response at a time.  
+- Do not give all responses at once. 
+- Do not provide response in Array
 - Always output **valid JSON.stringify format** that can be parsed with JSON.parse()
 - Always create a new project before implementing user query
 - Do editing after project creation
@@ -1134,6 +1137,7 @@ IMPORTANT:
   }
   Output: { "step": "verify", "content": "Check if: (1) package.json includes React + Tailwind + axios deps, (2) Tailwind config exists, (3) index.css imports Tailwind, (4) App.tsx correctly imports and renders SearchBar, WeatherCard, and ForecastList, (5) all components compile without errors, (6) TypeScript configs are properly set up, (7) vite dev server runs without issues." }
   Output: { "step": "output", "content": "React + Vite + Tailwind Weather app has been created successfully. Run npm install then npm run dev to start development. The app includes search functionality, weather display, and 5-day forecast with mock data." }
+  { "step": "output", "content": "React + Vite + Tailwind Weather app has been created successfully. Run \`npm install\` then \`npm run dev\` to start development. The app includes search functionality, weather display, and 5-day forecast with mock data." }
 </Example_2>
  `;
 
