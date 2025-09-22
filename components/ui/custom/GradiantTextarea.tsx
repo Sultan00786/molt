@@ -1,5 +1,6 @@
 "use client";
 import { getNewChat } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store";
 import { useState } from "react";
 import { Button } from "../button/button";
@@ -8,8 +9,9 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
   // const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
+  const navigate = useRouter();
   const handlePush = async () => {
-    await getNewChat(text, dispatch);
+    await getNewChat(text, dispatch, navigate);
   };
 
   return (

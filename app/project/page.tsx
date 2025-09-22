@@ -1,9 +1,12 @@
 "use client";
 import MonacoCodeEditor from "@/components/ui/code/MonacoCodeEditor";
 import GradiantTextarea from "@/components/ui/custom/GradiantTextarea";
+import { useAppSelector } from "@/store";
 import { ScrollShadow } from "@heroui/react";
 
-function page() {
+function Project() {
+  const template = useAppSelector((state) => state.code.template);
+  console.log("template", template);
   return (
     <div className="h-screen w-full relative z-40">
       <div className="pt-14 h-fit border-b-1 border-gray-700"></div>
@@ -106,4 +109,4 @@ export const Content = () => (
   </div>
 );
 
-export default page;
+export default Project;
