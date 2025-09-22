@@ -17,50 +17,6 @@ export const templateCreate = async (req: Request, res: Response) => {
     return;
   }
 
-  // const response = await gemini.models.generateContent({
-  //   model: process.env.GEMINI_MODEL as ModelType,
-  //   contents: prompt,
-  //   config: {
-  //     systemInstruction: getTempleteSysPrompt,
-  //     // responseMimeType: "application/json",
-  //   },
-  // });
-
-  // if (!response) {
-  //   res.status(500).json({
-  //     success: false,
-  //     message: "Something went wrong, LLM is not responding",
-  //   });
-  //   return;
-  // }
-  // if (!response.text) {
-  //   res.status(500).json({
-  //     success: false,
-  //     message: "Something went wrong, LLM is not responding",
-  //   });
-  //   return;
-  // }
-  // const ans = response.text?.trim().toLowerCase();
-
-  // if (ans === "unknown") {
-  //   res.status(400).json({
-  //     success: false,
-  //     message: "You prompt is not related to available programming language",
-  //   });
-  //   return;
-  // }
-
-  // there is still improvement needed here
-  // res.json({
-  //   success: true,
-  //   message: "Done!!",
-  //   prompts:
-  //     ans === "reactjs"
-  //       ? { prompt: reactPrompt, uiPrompt: stylingBasePrompt }
-  //       : ans === "nodejs"
-  //       ? { prompt: nodePrompt }
-  //       : { prompt: nextJsPrompt, uiPrompt: stylingBasePrompt },
-  // });
   const openAi = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
@@ -152,34 +108,63 @@ export const templateCreate = async (req: Request, res: Response) => {
     //     },
     //   }),
     // },
+    // {
+    //   role: "assistant",
+    //   content: JSON.stringify({
+    //     step: "generate",
+    //     content: {
+    //       path: "src/components/TimeDisplay.tsx",
+    //       language: "typescript",
+    //       code: "import React, { useState, useEffect } from 'react';\n\nconst TimeDisplay: React.FC = () => {\n  const [currentTime, setCurrentTime] = useState(new Date());\n\n  useEffect(() => {\n    const timerId = setInterval(() => {\n      setCurrentTime(new Date());\n    }, 1000);\n\n    return () => clearInterval(timerId);\n  }, []);\n\n  const formatTime = (date: Date) => {\n    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });\n  };\n\n  const formatDate = (date: Date) => {\n    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });\n  };\n\n  return (\n    <div className=\"text-center bg-gray-50 p-6 rounded-lg shadow-md w-full max-w-md\">\n      <p className=\"text-5xl font-bold text-gray-900 mb-2 tracking-tight\">\n        {formatTime(currentTime)}\n      </p>\n      <p className=\"text-xl text-gray-600 font-medium\">\n        {formatDate(currentTime)}\n      </p>\n    </div>\n  );\n};\n\nexport default TimeDisplay;\n",
+    //     },
+    //   }),
+    // },
+    // {
+    //   role: "assistant",
+    //   content: JSON.stringify({
+    //     step: "generate",
+    //     content: {
+    //       path: "src/components/WeatherDisplay.tsx",
+    //       language: "typescript",
+    //       code: 'import React, { useState, useEffect } from \'react\';\n\ninterface WeatherData {\n  name: string;\n  main: { temp: number; feels_like: number; humidity: number };\n  weather: [{ description: string; icon: string }];\n  wind: { speed: number };\n}\n\nconst API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY || \'YOUR_OPENWEATHER_API_KEY\'; // Replace with your actual API key\nconst DEFAULT_CITY = \'London\'; // Default city, you can change this\n\nconst WeatherDisplay: React.FC = () => {\n  const [weather, setWeather] = useState<WeatherData | null>(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    if (API_KEY === \'YOUR_OPENWEATHER_API_KEY\') {\n      setError(\'Please obtain an OpenWeatherMap API key and set it in src/components/WeatherDisplay.tsx or as a VITE_OPENWEATHER_API_KEY environment variable.\');\n      setLoading(false);\n      return;\n    }\n\n    const fetchWeather = async () => {\n      try {\n        setLoading(true);\n        setError(null);\n        const response = await fetch(\n          `https://api.openweathermap.org/data/2.5/weather?q=${DEFAULT_CITY}&appid=${API_KEY}&units=metric`\n        );\n        if (!response.ok) {\n          if (response.status === 401) {\n            throw new Error(\'Invalid API Key. Please check your OpenWeatherMap API key.\');\n          } else if (response.status === 404) {\n            throw new Error(`City not found: ${DEFAULT_CITY}`);\n          } else {\n            throw new Error(`Failed to fetch weather data: ${response.statusText}`);\n          }\n        }\n        const data: WeatherData = await response.json();\n        setWeather(data);\n      } catch (err: any) {\n        console.error("Weather fetch error:", err);\n        setError(err.message || \'An unknown error occurred while fetching weather.\');\n      } finally {\n        setLoading(false);\n      }\n    };\n\n    fetchWeather();\n  }, []);\n\n  if (loading) {\n    return (\n      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md text-center">\n        <p className="text-lg text-gray-700">Loading weather data...</p>\n      </div>\n    );\n  }\n\n  if (error) {\n    return (\n      <div className="w-full max-w-md bg-red-50 border border-red-200 p-6 rounded-lg shadow-md text-center">\n        <p className="text-lg text-red-700 font-semibold">Error:</p>\n        <p className="text-md text-red-600">{error}</p>\n        <p className="text-sm text-red-500 mt-2">Please ensure you have a valid OpenWeatherMap API key and that the city is correctly spelled.</p>\n      </div>\n    );\n  }\n\n  if (!weather) {\n    return (\n      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md text-center">\n        <p className="text-lg text-gray-700">No weather data available.</p>\n      </div>\n    );\n  }\n\n  const weatherIconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;\n\n  return (\n    <div className="text-center bg-blue-50 p-6 rounded-lg shadow-md w-full max-w-md">\n      <h2 className="text-3xl font-bold text-blue-800 mb-4">Weather in {weather.name}</h2>\n      <div className="flex items-center justify-center mb-4">\n        <img src={weatherIconUrl} alt={weather.weather[0].description} className="w-20 h-20" />\n        <p className="text-6xl font-extrabold text-blue-900 ml-4">{Math.round(weather.main.temp)}°C</p>\n      </div>\n      <p className="text-xl text-blue-700 capitalize mb-2">{weather.weather[0].description}</p>\n      <div className="grid grid-cols-2 gap-4 text-left mt-4">\n        <p className="text-lg text-gray-700"><span className="font-semibold">Feels like:</span> {Math.round(weather.main.feels_like)}°C</p>\n        <p className="text-lg text-gray-700"><span className="font-semibold">Humidity:</span> {weather.main.humidity}%</p>\n        <p className="text-lg text-gray-700"><span className="font-semibold">Wind:</span> {weather.wind.speed} m/s</p>\n      </div>\n      <p className="text-sm text-gray-500 mt-6">\n        Weather data provided by OpenWeatherMap. Get your API key from <a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">openweathermap.org/api</a>.\n      </p>\n    </div>\n  );\n};\n\nexport default WeatherDisplay;\n',
+    //     },
+    //   }),
+    // },
   ];
 
   const prompts = [];
 
   while (true) {
-    let count = 1;
-    console.log("iteration: ", count);
-    count++;
-    
-    const response = await openAi.chat.completions.create({
-      model: "gemini-2.5-flash",
-      response_format: { type: "json_object" },
-      messages: messages,
-    });
+    try {
+      let count = 1;
+      console.log("iteration: ", count);
+      count++;
 
-    messages.push({
-      role: "assistant",
-      content: response.choices[0].message.content as string,
-    });
+      const response = await openAi.chat.completions.create({
+        model: "gemini-2.5-flash",
+        response_format: { type: "json_object" },
+        messages: messages,
+      });
 
-    // console.log("messages: ", messages);
-    console.log("before parse res: ", response.choices[0].message);
-    const parseRes = JSON.parse(response.choices[0].message.content as string);
-    console.log("parse res: ", parseRes);
+      messages.push({
+        role: "assistant",
+        content: response.choices[0].message.content as string,
+      });
 
-    if (parseRes.step === "generate") prompts.push(parseRes);
+      // console.log("messages: ", messages);
+      console.log("before parse res: ", response.choices[0].message);
+      const parseRes = JSON.parse(
+        response.choices[0].message.content as string
+      );
+      console.log("parse res: ", parseRes);
 
-    if (parseRes.step === "output") {
+      if (parseRes.step === "generate_file") prompts.push(parseRes);
+
+      if (parseRes.step === "output") {
+        break;
+      }
+    } catch (error) {
+      console.log("error: ", error);
       break;
     }
   }
