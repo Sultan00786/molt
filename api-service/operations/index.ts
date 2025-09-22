@@ -1,10 +1,17 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ENDPONT_URL } from "../api";
-import { ChatItem, chatMessage } from "@/types/prompt";
+import { ChatItem, chatMessage, CodeGenerate } from "@/types/prompt";
+
+interface TemplateRes {
+  success: boolean;
+  message?: string;
+  prompts?: CodeGenerate[];
+  error?: string;
+}
 
 export const fetchTemplate = async (prompt: string) => {
   try {
-    const response = await axios.post(`${ENDPONT_URL.template}`, {
+    const response:AxiosResponse<TemplateRes> = await axios.post(`${ENDPONT_URL.template}`, {
       prompt: prompt,
     });
     if (response.status !== 200) throw Error("Something went wrong");
