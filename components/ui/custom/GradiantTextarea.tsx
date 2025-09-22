@@ -17,7 +17,7 @@ function GradiantTextarea({ classNames = "" }: { classNames: string }) {
       className={`${classNames} h-[150px] relative flex flex-col items-center bg-radial-gradient pt-[1px] pb-[0.5px] px-[1px] rounded-[5px]`}
     >
       <div className=" w-full h-full bg-richblack-990 rounded-[5px] ">
-        <div className=" w-full h-full flex flex-row gap-2 items-center bg-richblack-900/40 p-4">
+        <div className=" w-full h-full flex flex-row gap-2 items-center rounded-[5px] bg-richblack-900/40 p-4">
           <div className="w-full h-full flex flex-col gap-2">
             <textarea
               placeholder="How can Bolt help you today ?"
