@@ -9,7 +9,7 @@ function Project() {
   console.log("template", template);
   return (
     <div className="h-screen w-full relative z-40">
-      <div className="pt-14 h-fit border-b-1 border-gray-700"></div>
+      <div className="h-fit border-b-1 border-gray-700"></div>
       <div className=" h-[93%] flex gap-2">
         <div className=" w-[40%] flex flex-col items-center ">
           <ScrollShadow
