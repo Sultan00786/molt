@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
-import { gemini, ModelType } from "..";
-import { getTempleteSysPrompt } from "../prompts";
-import { nextJsPrompt } from "../template/next";
-import { nodePrompt } from "../template/node";
-import { reactPrompt, stylingBasePrompt } from "../template/react";
+import { OpenAI } from "openai";
+import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
+import { SYSTEM_PROMPT } from "../prompts";
 
 export const templateCreate = async (req: Request, res: Response) => {
   const { prompt } = req.body;
@@ -15,49 +13,78 @@ export const templateCreate = async (req: Request, res: Response) => {
     return;
   }
 
-  const response = await gemini.models.generateContent({
-    model: process.env.GEMINI_MODEL as ModelType,
-    contents: prompt,
-    config: {
-      systemInstruction: getTempleteSysPrompt,
-      // responseMimeType: "application/json",
+  const openAi = new OpenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+  });
+
+  const messages: ChatCompletionCreateParamsBase["messages"] = [
+    { role: "system", content: SYSTEM_PROMPT },
+    {
+      role: "user",
+      content: JSON.stringify({ step: "user_query", content: prompt }),
     },
-  });
+  ];
 
-  if (!response) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong, LLM is not responding",
-    });
+  const prompts = [];
+
+  let count = 1;
+
+  try {
+    while (true) {
+      console.log("iteration: ", count);
+      count++;
+
+      const response = await openAi.chat.completions.create({
+        model: "gemini-2.5-flash",
+        response_format: { type: "json_object" },
+        messages: messages,
+      });
+
+      console.log("response: ", response);
+
+      const rawContent = response.choices[0].message.content;
+      if (!rawContent || typeof rawContent !== "string") {
+        throw new Error("Invalid agent response");
+      }
+      messages.push({
+        role: "assistant",
+        content: response.choices[0].message.content as string,
+      });
+
+      // console.log("messages: ", messages);
+      // console.log("before parse res: ", response.choices[0].message);
+      const parseRes = JSON.parse(rawContent);
+      console.log("parse res: ", parseRes);
+
+      if (typeof parseRes !== "object") {
+        throw new Error("Invalid agent response");
+      }
+
+      if (parseRes.step === "generate_file") prompts.push(parseRes);
+
+      if (parseRes.step === "output") {
+        res.json({
+          success: true,
+          message: "Done!!",
+          prompts: prompts,
+        });
+        return;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+    }
+  } catch (error) {
+    console.log("error: ", error);
+    if (error)
+      res.json({
+        success: false,
+        error: `${error}`,
+      });
     return;
   }
-  if (!response.text) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong, LLM is not responding",
-    });
-    return;
-  }
-  const ans = response.text?.trim().toLowerCase();
-
-  if (ans === "unknown") {
-    res.status(400).json({
-      success: false,
-      message: "You prompt is not related to available programming language",
-    });
-    return;
-  }
-
-  // there is still improvement needed here
+  console.log("prompts : ", prompts);
   res.json({
-    success: true,
-    message: "Done!!",
-    prompts:
-      ans === "reactjs"
-        ? { prompt: reactPrompt, uiPrompt: stylingBasePrompt }
-        : ans === "nodejs"
-        ? { prompt: nodePrompt }
-        : { prompt: nextJsPrompt, uiPrompt: stylingBasePrompt },
+    success: false,
+    message: "Something went wrong",
   });
-  return;
 };

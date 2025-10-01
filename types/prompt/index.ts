@@ -1,6 +1,6 @@
 export interface chatMessage {
   role: string;
-  content: string;
+  content: CodeGenerateContent;
 }
 
 export enum ItemType {
@@ -30,3 +30,14 @@ export type ShellItem = {
   type: ItemType.Shell;
   command: string;
 };
+
+export interface CodeGenerate {
+  step: "generate_file";
+  content: CodeGenerateContent;
+}
+
+export interface CodeGenerateContent {
+  path: string;
+  language: string;
+  code: string;
+}
