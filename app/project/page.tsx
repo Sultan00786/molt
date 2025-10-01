@@ -8,7 +8,7 @@ function Project() {
   const template = useAppSelector((state) => state.code.template);
   console.log("template", template);
   return (
-    <div className="h-screen w-full relative z-40">
+    <div className="h-screen w-full relative z-40 overflow-hidden">
       <div className="h-fit border-b-1 border-gray-700"></div>
       <div className=" h-[93%] flex gap-2">
         <div className=" w-[40%] flex flex-col items-center ">
@@ -25,7 +25,7 @@ function Project() {
           </div>
         </div>
         <div className="w-[60%] h-full border-1 flex">
-          <div className="w-[30%] border-r-1 bg-[#1e1e1e] border-zinc-700/80"></div>
+          <div className="w-[30%] border-r-1 bg-[#1F1F20] border-zinc-700/80"></div>
           <div className=" w-full h-full">
             <MonacoCodeEditor />
           </div>
