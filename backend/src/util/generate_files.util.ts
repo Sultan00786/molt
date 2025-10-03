@@ -1,6 +1,11 @@
 import { FolderNode, InputFile, TreeNode } from "../types/files";
 
-export function addFileToTree(files: TreeNode[], file: InputFile): void {
+export function addFileToTree(
+  files: TreeNode[],
+  raw_file: InputFile | string
+): void {
+  const file: InputFile =
+    typeof raw_file === "string" ? JSON.parse(raw_file) : raw_file;
   const parts = file.path.split("/"); // e.g. ["src", "components", "TodoInput.tsx"]
   let currentLevel = files;
 
