@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { OpenAI } from "openai";
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
-import { getRepeatFeedback, SYSTEM_PROMPT } from "../prompts";
+import { SYSTEM_PROMPT } from "../prompts";
 import { TreeNode } from "../types/files";
 import { addFileToTree } from "../util/generate_files.util";
 
