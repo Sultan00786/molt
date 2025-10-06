@@ -6,6 +6,7 @@ import Provider from "./provider";
 import NavbarSection from "@/components/ui/custom/NavbarSection";
 import GradiantSpot from "@/components/ui/custom/GradiantSpot";
 import { usePathname } from "next/navigation";
+import ProjectNavbar from "@/components/ui/custom/ProjectNavbar";
 
 const geistSans = Noto_Sans({
   weight: "500",
@@ -32,7 +33,11 @@ export default function RootLayout({
       >
         <Provider>
           <div className="relative h-full w-full overflow-hidden ">
-            <NavbarSection />
+            {pathname.includes("/project") ? (
+              <ProjectNavbar />
+            ) : (
+              <NavbarSection />
+            )}
             <div className="w-full h-full relative z-30 overflow-hidden">
               {children}
             </div>

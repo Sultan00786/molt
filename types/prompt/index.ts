@@ -3,22 +3,18 @@ export interface chatMessage {
   content: CodeGenerateContent;
 }
 
-export enum ItemType {
-  File = "file",
-  Folder = "folder",
-  Shell = "shell",
-}
+export type ItemType = "folder" | "file" | "shell";
 
 export type ChatItem = FolderItem | FileItem | ShellItem;
 
 export type FolderItem = {
-  type: ItemType.Folder;
+  type: "folder";
   title: string;
   children: ChatItem[];
 };
 
 export type FileItem = {
-  type: ItemType.File;
+  type: "file";
   title: string;
   path: string;
   extension: string;
@@ -27,7 +23,7 @@ export type FileItem = {
 };
 
 export type ShellItem = {
-  type: ItemType.Shell;
+  type: "shell";
   command: string;
 };
 

@@ -22,7 +22,7 @@ module.exports = {
         heading4: ["20px", { lineHeight: "125%" }],
         body1: ["16px", { lineHeight: "150%", letterSpacing: "0.8px" }],
         body2: ["14px", { lineHeight: "150%", letterSpacing: "0.8px" }],
-        body3: ["12px", { lineHeight: "150%", letterSpacing: "0.8px" }],
+        body3: ["13px", { lineHeight: "150%", letterSpacing: "0.8px" }],
       },
     },
     colors: {
