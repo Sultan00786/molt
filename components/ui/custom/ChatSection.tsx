@@ -4,14 +4,16 @@ import GradiantTextarea from "./GradiantTextarea";
 
 export default function ChatSection() {
   return (
-    <div className=" w-[750px] flex flex-col gap-[10px] items-center ">
+    <div className=" w-[750px] h-full flex flex-col gap-[10px]">
       <ScrollShadow
         hideScrollBar
-        className="h-full bg-zinc-800/90"
+        className="h-[calc(100%-150px)] bg-richblack-990 rounded-[6]"
         offset={100}
         orientation="horizontal"
       >
-        <Content />
+        <div className="h-full flex flex-col gap-[10px] items-center p-2 rounded-[6] bg-richblack-900/50">
+          {/* <Content /> */}
+        </div>
       </ScrollShadow>
       <div className=" w-full ">
         <GradiantTextarea classNames="w-full min-h-[140px]" />
