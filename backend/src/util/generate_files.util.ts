@@ -16,7 +16,8 @@ export function addFileToTree(
       // Add file node
       currentLevel.push({
         type: "file",
-        name: part,
+        title: part,
+        extension: part.split(".").pop() || "",
         language: file.language,
         path: file.path,
         code: file.code,
@@ -25,10 +26,10 @@ export function addFileToTree(
       // Find or create folder
       let existingFolder = currentLevel.find(
         (folder): folder is FolderNode =>
-          folder.type === "folder" && folder.name === part
+          folder.type === "folder" && folder.title === part
       );
       if (!existingFolder) {
-        existingFolder = { type: "folder", name: part, children: [] };
+        existingFolder = { type: "folder", title: part, children: [] };
         currentLevel.push(existingFolder);
       }
       currentLevel = existingFolder.children;
