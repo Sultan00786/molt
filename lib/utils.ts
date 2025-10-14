@@ -1,9 +1,11 @@
 import { fetchTemplate } from "@/api-service/operations";
-import { setTemplate } from "@/store/slices/codeSlice";
+import { setChatCode, setWebcontainFiles } from "@/store/slices/codeSlice";
 import { Dispatch } from "@reduxjs/toolkit";
+import { FileSystemTree } from "@webcontainer/api";
 import { clsx, type ClassValue } from "clsx";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { twMerge } from "tailwind-merge";
+import { convertToWebcontainerFiles } from "./webContainer";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -18,16 +20,9 @@ export async function getNewChat(
   console.log(templateResponse);
   // todo hit chat endpoint
   if (templateResponse && templateResponse?.length > 0) {
-    const message = Object.values(templateResponse)
-      .map((promt) => promt)
-      .reverse()
-      .map((promt) => ({
-        role: "user",
-        content: promt.content,
-      }));
-    console.log("message", message);
-    // set template
-    dispatch(setTemplate(message));
+    dispatch(setChatCode(templateResponse));
+    const parseRes: FileSystemTree = convertToWebcontainerFiles(templateResponse);
+    dispatch(setWebcontainFiles(parseRes));
     navigate.push("/project");
   } else {
     console.log("Generate file array has zero length");

@@ -1,6 +1,7 @@
 export type FileNode = {
   type: "file";
-  name: string;
+  title: string;
+  extension: string;
   language: string;
   path: string;
   code: string;
@@ -8,7 +9,7 @@ export type FileNode = {
 
 export type FolderNode = {
   type: "folder";
-  name: string;
+  title: string;
   children: TreeNode[];
 };
 
