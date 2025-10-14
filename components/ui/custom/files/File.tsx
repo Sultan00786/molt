@@ -9,7 +9,7 @@ function FileComponent({ file, spacing, setSelectedFile }: FileProps) {
         spacing === 1 && "pl-2"
       }`}
       style={{ paddingLeft: `${leftSpacing}px` }}
-      onClick={() => setSelectedFile((prev) => file)}
+      onClick={() => setSelectedFile(file)}
     >
       <FileText width={14} height={14} strokeWidth={1.5} />
       <p className="text-body2 h-[18px] ">{file.title}</p>
