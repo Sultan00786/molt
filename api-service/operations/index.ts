@@ -1,11 +1,12 @@
+import { ChatItem, chatMessage } from "@/types/prompt";
 import axios, { AxiosResponse } from "axios";
 import { ENDPONT_URL } from "../api";
-import { ChatItem, chatMessage, CodeGenerate } from "@/types/prompt";
 
 interface TemplateRes {
   success: boolean;
   message?: string;
-  prompts?: CodeGenerate[];
+  // prompts?: CodeGenerate[];
+  prompts?: ChatItem[];
   error?: string;
 }
 
