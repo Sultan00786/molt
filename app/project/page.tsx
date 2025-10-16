@@ -1,10 +1,13 @@
 "use client";
-import MonacoCodeEditor from "@/components/ui/code/MonacoCodeEditor";
 import ChatSection from "@/components/ui/custom/ChatSection";
 import FileManager from "@/components/ui/custom/files/FileManager";
+import Priview from "@/components/ui/custom/webContainer/Priview";
 import { files } from "@/lib/temp";
+import { convertToWebcontainerFiles } from "@/lib/webContainer/covertWebcontainerFiles";
+import { runWebContainer } from "@/lib/webContainer/runWebContainer";
 import { FileItem } from "@/types/prompt";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Project() {
   // const template = useAppSelector((state) => state.code.chatCode ?? []);
@@ -12,13 +15,25 @@ function Project() {
   console.log("template", template);
 
   const file = template.find((file) => file.type === "file");
-  const [selectedFile, setSelectedFile] = useState<FileItem | null>(file ?? null);
+  const [selectedFile, setSelectedFile] = useState<FileItem | null>(
+    file ?? null
+  );
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {
+    async function needToRunWebcontainer() {
+      setIsLoading(true);
+      const mountStructur = convertToWebcontainerFiles(template);
+      console.log(mountStructur);
+      await runWebContainer(mountStructur, dispatch);
+      setIsLoading(false);
+    }
+    needToRunWebcontainer();
+  }, []);
 
-  if (file === undefined || selectedFile === null) return <div>File is null</div>;
+  if (file === undefined || selectedFile === null)
+    return <div>File is null</div>;
   return (
     <div className="h-screen w-full relative z-40 overflow-hidden pb-7">
       {/* <div className="h-fit "></div> */}
@@ -29,10 +44,11 @@ function Project() {
           <FileManager files={template} setSelectedFile={setSelectedFile} />
           <div className=" w-full h-full">
             <div className="w-full h-8 bg-richblack-900 border-b-1 border-richblack-800"></div>
-            <MonacoCodeEditor
+            {/* <MonacoCodeEditor
               key={selectedFile.title}
               selectedFile={selectedFile}
-            />
+            /> */}
+            <Priview isLoading={isLoading} />
           </div>
         </div>
       </div>
