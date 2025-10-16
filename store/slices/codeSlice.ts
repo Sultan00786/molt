@@ -3,11 +3,12 @@ import { CodeState } from "@/types/store/sliceTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FileSystemTree } from "@webcontainer/api";
 
-const codeInitialState:CodeState = {
+const codeInitialState: CodeState = {
   codeCall: false,
   template: null,
   chatCode: null,
   webcontainFiles: null,
+  webcontainUrl: "",
 };
 
 const codeSlice = createSlice({
@@ -27,8 +28,17 @@ const codeSlice = createSlice({
     setWebcontainFiles(state, action: PayloadAction<FileSystemTree | null>) {
       state.webcontainFiles = action.payload;
     },
+    setWebcontainUrl(state, action: PayloadAction<string>) {
+      state.webcontainUrl = action.payload;
+    },
   },
 });
 
-export const {setChatCode, setCodeCall, setTemplate, setWebcontainFiles} = codeSlice.actions;
+export const {
+  setChatCode,
+  setCodeCall,
+  setTemplate,
+  setWebcontainFiles,
+  setWebcontainUrl,
+} = codeSlice.actions;
 export default codeSlice.reducer;
