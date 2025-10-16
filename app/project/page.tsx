@@ -2,16 +2,22 @@
 import MonacoCodeEditor from "@/components/ui/code/MonacoCodeEditor";
 import ChatSection from "@/components/ui/custom/ChatSection";
 import FileManager from "@/components/ui/custom/files/FileManager";
-import { useAppSelector } from "@/store";
+import { files } from "@/lib/temp";
 import { FileItem } from "@/types/prompt";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Project() {
-  const template = useAppSelector((state) => state.code.chatCode ?? []);
+  // const template = useAppSelector((state) => state.code.chatCode ?? []);
+  const template = files;
   console.log("template", template);
 
   const file = template.find((file) => file.type === "file");
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(file ?? null);
+
+  useEffect(()=>{
+    
+  },[])
+
   if (file === undefined || selectedFile === null) return <div>File is null</div>;
   return (
     <div className="h-screen w-full relative z-40 overflow-hidden pb-7">

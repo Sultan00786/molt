@@ -5,7 +5,7 @@ import { FileSystemTree } from "@webcontainer/api";
 import { clsx, type ClassValue } from "clsx";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { twMerge } from "tailwind-merge";
-import { convertToWebcontainerFiles } from "./webContainer";
+import { convertToWebcontainerFiles } from "./webContainer/covertWebcontainerFiles";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
