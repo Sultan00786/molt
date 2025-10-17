@@ -6,4 +6,5 @@ export interface CodeState {
   template: chatMessage[] | null;
   chatCode: ChatItem[] | null;
   webcontainFiles: FileSystemTree | null;
+  webcontainUrl: string;
 }
