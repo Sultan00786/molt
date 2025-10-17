@@ -59,5 +59,11 @@ async function startDevServer(
     console.log(`✅ Server ready on port ${port}`);
     console.log(`🌐 URL: ${url}`);
     dispatch(setWebcontainUrl(url));
+    let molt = JSON.parse(localStorage.getItem("molt") ?? "{}");
+    molt = {
+      ...molt,
+      webcontainUrl: url,
+    };
+    localStorage.setItem("molt", JSON.stringify(molt));
   });
 }

@@ -21,8 +21,14 @@ export async function getNewChat(
   // todo hit chat endpoint
   if (templateResponse && templateResponse?.length > 0) {
     dispatch(setChatCode(templateResponse));
-    const parseRes: FileSystemTree = convertToWebcontainerFiles(templateResponse);
+    const parseRes: FileSystemTree =
+      convertToWebcontainerFiles(templateResponse);
     dispatch(setWebcontainFiles(parseRes));
+    const molt = {
+      chatCode: templateResponse,
+      webcontainFiles: parseRes,
+    };
+    localStorage.setItem("molt", JSON.stringify(molt));
     navigate.push("/project");
   } else {
     console.log("Generate file array has zero length");
