@@ -32,7 +32,9 @@ function Project() {
               key={selectedFile.title}
               selectedFile={selectedFile}
             /> */}
-            <Priview />
+            <div className="w-full h-[calc(100%-32px)] ">
+              <Priview />
+            </div>
           </div>
         </div>
       </div>

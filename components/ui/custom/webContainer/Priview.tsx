@@ -24,10 +24,10 @@ function Priview() {
   }, []);
 
   return (
-    <div>
-      <div className="flex-1 relative">
+    <div className="h-full">
+      <div className="flex-1 h-full overflow-y-auto ">
         {isLoading ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-richblack-900">
+          <div className="flex items-center justify-center">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
               <p className="text-richblack-100">Starting WebContainer...</p>
@@ -36,7 +36,8 @@ function Priview() {
         ) : webcontainerUrl ? (
           <iframe
             src={webcontainerUrl}
-            className="w-full h-full border-0"
+            width={"100%"}
+            height={"100%"}
             title="WebContainer Preview"
           />
         ) : (
