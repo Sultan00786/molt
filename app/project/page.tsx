@@ -3,11 +3,8 @@ import ChatSection from "@/components/ui/custom/ChatSection";
 import FileManager from "@/components/ui/custom/files/FileManager";
 import Priview from "@/components/ui/custom/webContainer/Priview";
 import { files } from "@/lib/temp";
-import { convertToWebcontainerFiles } from "@/lib/webContainer/covertWebcontainerFiles";
-import { runWebContainer } from "@/lib/webContainer/runWebContainer";
 import { FileItem } from "@/types/prompt";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 function Project() {
   // const template = useAppSelector((state) => state.code.chatCode ?? []);
@@ -18,19 +15,6 @@ function Project() {
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(
     file ?? null
   );
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function needToRunWebcontainer() {
-      setIsLoading(true);
-      const mountStructur = convertToWebcontainerFiles(template);
-      console.log(mountStructur);
-      await runWebContainer(mountStructur, dispatch);
-      setIsLoading(false);
-    }
-    needToRunWebcontainer();
-  }, []);
 
   if (file === undefined || selectedFile === null)
     return <div>File is null</div>;
@@ -48,7 +32,7 @@ function Project() {
               key={selectedFile.title}
               selectedFile={selectedFile}
             /> */}
-            <Priview isLoading={isLoading} />
+            <Priview />
           </div>
         </div>
       </div>
