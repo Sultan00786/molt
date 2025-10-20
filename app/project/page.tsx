@@ -3,13 +3,14 @@ import ChatSection from "@/components/ui/custom/ChatSection";
 import FileManager from "@/components/ui/custom/files/FileManager";
 import Priview from "@/components/ui/custom/webContainer/Priview";
 import { files } from "@/lib/temp";
+import { useAppSelector } from "@/store";
 import { FileItem } from "@/types/prompt";
 import { useState } from "react";
 
 function Project() {
-  // const template = useAppSelector((state) => state.code.chatCode ?? []);
-  const template = files;
-  console.log("template", template);
+  const template = useAppSelector((state) => state.code.chatCode ?? []);
+  // const template = files;
+  // console.log("template", template);
 
   const file = template.find((file) => file.type === "file");
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(

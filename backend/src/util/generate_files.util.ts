@@ -36,3 +36,20 @@ export function addFileToTree(
     }
   });
 }
+
+export function sortTree(nodes: TreeNode[]): void {
+  // Sort this level
+  nodes.sort((a, b) => {
+    if (a.type !== b.type) {
+      return a.type === "folder" ? -1 : 1;
+    }
+    return a.title.localeCompare(b.title);
+  });
+
+  // Recursively sort all folder children
+  nodes.forEach((node) => {
+    if (node.type === "folder") {
+      sortTree(node.children);
+    }
+  });
+}

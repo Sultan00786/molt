@@ -1,5 +1,5 @@
 "use client";
-import { files } from "@/lib/temp";
+// import { files } from "@/lib/temp";
 import { convertToWebcontainerFiles } from "@/lib/webContainer/covertWebcontainerFiles";
 import { runWebContainer } from "@/lib/webContainer/runWebContainer";
 import { useAppSelector } from "@/store";
@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 
 function Priview() {
   const webcontainerUrl = useAppSelector((state) => state.code.webcontainUrl);
+  const files = useAppSelector((state) => state.code.chatCode ?? []);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   console.log(webcontainerUrl);

@@ -3,7 +3,7 @@ import { OpenAI } from "openai";
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions";
 import { SYSTEM_PROMPT } from "../prompts";
 import { TreeNode } from "../types/files";
-import { addFileToTree } from "../util/generate_files.util";
+import { addFileToTree, sortTree } from "../util/generate_files.util";
 
 const schema = {
   type: "object",
@@ -261,6 +261,7 @@ export const templateCreate = async (req: Request, res: Response) => {
       // Check if complete
       if (parseRes.step === "output" || parseRes.step === "stop") {
         console.log("prompts : ", prompts);
+        sortTree(prompts);
         res.json({
           success: true,
           message: parseRes.content || "Done!!",
