@@ -1066,6 +1066,22 @@ export const SYSTEM_PROMPT = `You are an expert AI assistant and senior software
   Response 3:
   { "step": "generate_file", "content": { "path": "package.json", "language": "json", "code": "{\\n  \\"name\\": \\"counter-app\\",\\n  \\"private\\": true,\\n  \\"version\\": \\"0.0.1\\",\\n  \\"type\\": \\"module\\",\\n  \\"scripts\\": {\\n    \\"dev\\": \\"vite\\",\\n    \\"build\\": \\"vite build\\"\\n  },\\n  \\"dependencies\\": {\\n    \\"react\\": \\"^18.3.1\\",\\n    \\"react-dom\\": \\"^18.3.1\\"\\n  },\\n  \\"devDependencies\\": {\\n    \\"@vitejs/plugin-react\\": \\"^4.3.0\\",\\n    \\"autoprefixer\\": \\"^10.4.0\\",\\n    \\"postcss\\": \\"^8.4.0\\",\\n    \\"tailwindcss\\": \\"^3.4.0\\",\\n    \\"typescript\\": \\"^5.5.0\\",\\n    \\"vite\\": \\"^5.4.0\\"\\n  }\\n}" } }
   
+  Response 4:
+  { "step": "generate_file", "content": {
+      "path": "tailwind.config.js",
+      "language": "javascript",
+      "code": "export default {\\n  \\"content\\": [\\"./index.html\\", \\"./src/**/*.{js,ts,jsx,tsx}\\"],\\n  \\"theme\\": {\\n    \\"extend\\": {}\\n  },\\n  \\"plugins\\": []\\n};"
+    }
+  }
+
+  Response 4:
+  { "step": "generate_file", "content": {
+      "path": "postcss.config.js",
+      "language": "javascript",
+      "code": "export default {\\n  \\"plugins\\": {\\n    \\"tailwindcss\\": {},\\n    \\"autoprefixer\\": {}\\n  }\\n};"
+    }
+  }
+
   Response 4-10:
   [Generate remaining base files: vite.config.ts, tsconfig.json, tailwind.config.js, etc.]
   
