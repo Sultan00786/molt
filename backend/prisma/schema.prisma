@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -14,4 +13,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model 
+model User {
+  id        Int   @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  name      String
+  project   Project[]
+}
+
+model Project {
+  id            Int               @id @default(autoincrement())
+  name          String            @default("")
+  description   String    
+  created_at    DateTime          @default(now())
+  user_id       Int
+  owner         User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  file_message  File_Message[]
+}
+
+model File_Message {
+  id            Int       @id @default(autoincrement())
+  content       String
+  step          Step
+  sender        Sender
+  agent_name    Agent?
+  project_id    Int
+  project       Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+}
+
+enum Sender {
+  User
+  Agent
+}
+
+enum Agent {
+  Create_Project
+  Edit_Project
+  Fix_Project
+}
+
+enum Step {
+  plan
+  generate_file
+  observe
+  verify
+  error
+  output
+}
+
