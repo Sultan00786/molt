@@ -53,3 +53,7 @@ export function sortTree(nodes: TreeNode[]): void {
     }
   });
 }
+
+export function createAllMessage (): void {
+  
+}

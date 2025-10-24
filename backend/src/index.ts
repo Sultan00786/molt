@@ -1,15 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import express, { Express } from "express";
-import { templateCreate } from "./controller/template";
+import { createProject } from "./controller/project";
 import { chat } from "./controller/chat";
 import cors from "cors";
-
-export type ModelType =
-  | "gemini-2.0-flash"
-  | "gemini-2.0-flash-lite"
-  | "gemini-2.0-flash-8b"
-  | "gemini-1.5-flash";
+import { PrismaClient } from "@prisma/client";
 
 dotenv.config();
 const app: Express = express();
@@ -31,8 +26,7 @@ app.use(express.json());
 // };
 
 app.use(cors());
-
-export type MessageType = { role: string; content: string }[];
+export const prisma = new PrismaClient();
 
 export const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -41,7 +35,7 @@ app.get("/", (req, res) => {
   return;
 });
 
-app.post("/template", templateCreate);
+app.post("/template", createProject);
 app.post("/chat", chat);
 
 const port = process.env.PORT || 3000;

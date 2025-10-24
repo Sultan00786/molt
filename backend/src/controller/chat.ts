@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { gemini, MessageType, ModelType } from "..";
+import { gemini } from "..";
 import { getSystemPrompt } from "../prompts";
+import { MessageType, ModelType } from "../types/llm";
 
 export const chat = async (req: Request, res: Response) => {
   const messages: MessageType = JSON.parse(req.body.messages);

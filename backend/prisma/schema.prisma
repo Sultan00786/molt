@@ -19,6 +19,7 @@ model User {
   password  String
   name      String
   project   Project[]
+  created_at    DateTime
 }
 
 model Project {
@@ -34,9 +35,10 @@ model Project {
 model File_Message {
   id            Int       @id @default(autoincrement())
   content       String
-  step          Step
+  step          Step?
   sender        Sender
   agent_name    Agent?
+  created_at    DateTime
   project_id    Int
   project       Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
 }

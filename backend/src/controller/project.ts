@@ -4,6 +4,7 @@ import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completion
 import { SYSTEM_PROMPT } from "../prompts";
 import { TreeNode } from "../types/files";
 import { addFileToTree, sortTree } from "../util/generate_files.util";
+import { prisma } from "..";
 
 const schema = {
   type: "object",
@@ -30,7 +31,7 @@ const schema = {
   required: ["step", "content"],
 } as const;
 
-export const templateCreate = async (req: Request, res: Response) => {
+export const createProject = async (req: Request, res: Response) => {
   const { prompt } = req.body;
   if (!prompt) {
     res.status(400).json({
@@ -55,7 +56,7 @@ export const templateCreate = async (req: Request, res: Response) => {
     },
   ];
 
-  const prompts: TreeNode[] = [];
+  const rawFiles: TreeNode[] = [];
   let count = 1;
   const MAX_ITERATIONS = 50; // Safety limit
 
@@ -102,19 +103,38 @@ export const templateCreate = async (req: Request, res: Response) => {
         throw new Error("Invalid agent response");
       }
 
-      // Handle file generation
       if (parseRes.step === "generate_file") {
-        addFileToTree(prompts, parseRes.content);
+        addFileToTree(rawFiles, parseRes.content);
       }
 
-      // Check if complete
       if (parseRes.step === "output" || parseRes.step === "stop") {
-        console.log("prompts : ", prompts);
-        sortTree(prompts);
+        console.log("rawFiles : ", rawFiles);
+        sortTree(rawFiles);
+        // didn't work first we need to create user login flow then after that we can do other things
+        // await prisma.$transaction(async (tx) => {
+        //   const currentTime = new Date();
+        //   const files = await Promise.all(
+        //     messages.map(async (file) => {
+        //       if(file.role === "user") {
+        //         return await tx.file_Message.create({
+        //           data: {
+        //             content: JSON.stringify(file.content),
+        //             sender: "User"
+        //           },
+        //         });
+        //       }
+        //       return await tx.file_Message.create({
+        //         data: {
+        //           content: file.content,
+        //           step: file.step,
+        //         },
+        //       });
+        //   )
+        // });
         res.json({
           success: true,
           message: parseRes.content || "Done!!",
-          prompts: prompts,
+          rawFiles: rawFiles,
         });
         return;
       }
@@ -126,23 +146,24 @@ export const templateCreate = async (req: Request, res: Response) => {
       // });
 
       count++;
-      // Wait 12 seconds
-      // This is to avoid rate limits of Gemini Pro
+      // Wait 12 seconds for gemini
+      // wait 2 seconds for openai
+      // This is to avoid rate limits of respective llm
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }
 
     // Max iterations reached
     res.json({
       success: false,
-      message: `Process incomplete after ${MAX_ITERATIONS} iterations. Generated ${prompts.length} files so far.`,
-      prompts: prompts,
+      message: `Process incomplete after ${MAX_ITERATIONS} iterations. Generated ${rawFiles.length} files so far.`,
+      rawFiles: rawFiles,
     });
   } catch (error) {
     console.log("error: ", error);
     res.json({
       success: false,
       error: `${error}`,
-      prompts: prompts, // Return what we have so far
+      rawFiles: rawFiles, // Return what we have so far
     });
   }
 };
