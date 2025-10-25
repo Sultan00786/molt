@@ -5,6 +5,7 @@ import { createProject } from "./controller/project";
 import { chat } from "./controller/chat";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
+import { clerkMiddleware } from "@clerk/express";
 
 dotenv.config();
 const app: Express = express();
@@ -26,6 +27,7 @@ app.use(express.json());
 // };
 
 app.use(cors());
+app.use(clerkMiddleware());
 export const prisma = new PrismaClient();
 
 export const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
