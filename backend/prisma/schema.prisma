@@ -15,9 +15,9 @@ datasource db {
 
 model User {
   id        Int   @id @default(autoincrement())
+  clerkId   String  @unique
   email     String  @unique
-  password  String
-  name      String
+  name      String  
   project   Project[]
   created_at    DateTime
 }
