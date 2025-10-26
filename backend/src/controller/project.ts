@@ -4,7 +4,6 @@ import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completion
 import { SYSTEM_PROMPT } from "../prompts";
 import { TreeNode } from "../types/files";
 import { addFileToTree, sortTree } from "../util/generate_files.util";
-import { prisma } from "..";
 
 const schema = {
   type: "object",

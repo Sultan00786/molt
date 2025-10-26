@@ -1,11 +1,12 @@
+import { clerkMiddleware, UserJSON } from "@clerk/express";
 import { GoogleGenAI } from "@google/genai";
+import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express } from "express";
-import { createProject } from "./controller/project";
-import { chat } from "./controller/chat";
-import cors from "cors";
-import { PrismaClient } from "@prisma/client";
-import { clerkMiddleware } from "@clerk/express";
+import { chatRouter } from "./routes/chat";
+import { projectRouter } from "./routes/project";
+import { verifyWebhook } from "@clerk/express/webhooks";
 
 dotenv.config();
 const app: Express = express();
@@ -36,9 +37,50 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
   return;
 });
+app.post(
+  "/api/webhooks",
+  express.raw({ type: "application/json" }),
+  async (req, res) => {
+    try {
+      const evt = await verifyWebhook(req);
 
-app.post("/template", createProject);
-app.post("/chat", chat);
+      // Do something with payload
+      // For this guide, log payload to console
+      const data: UserJSON = evt.data as UserJSON;
+      const type = evt.type;
+
+      if (type === "user.created") {
+        try {
+          await prisma.user.create({
+            data: {
+              clerkId: data.id,
+              email: data.email_addresses[0].email_address,
+              name: `${data.first_name} ${data.last_name}`.trim() || "User",
+              created_at: new Date(),
+            },
+          });
+          res.send("User Signed Up");
+          return;
+        } catch (error) {
+          // If user already exists (unique constraint violation)
+          if (error && error?.code && error?.code === "P2002") {
+            console.log("User already exists, skipping...");
+            res.status(200).json({ message: "User already exists" });
+            return;
+          }
+          throw error; // Other errors
+        }
+      }
+    } catch (err) {
+      console.error("Error verifying webhook:", err);
+      res.status(400).send("Error verifying webhook");
+      return;
+    }
+  }
+);
+
+app.use("/project", projectRouter);
+app.use("/chat", chatRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
