@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.className} ${
           pathname.includes("/project") && "overflow-y-hidden"
-        } overflow-x-hidden h-screen bg-richblack-990 font-inter relative -z-40 text-white`}
+        } overflow-x-hidden min-h-screen bg-richblack-990 font-inter relative -z-40 text-white`}
       >
         <Provider>
           <div className="relative h-full w-full overflow-hidden ">

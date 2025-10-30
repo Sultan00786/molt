@@ -18,4 +18,7 @@ module.exports = {
     ];
   },
   reactStrictMode: true,
+  images: {
+    domains: ["images.unsplash.com"], // ✅ Add this line
+  },
 };

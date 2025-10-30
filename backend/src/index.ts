@@ -43,33 +43,20 @@ app.post(
   async (req, res) => {
     try {
       const evt = await verifyWebhook(req);
-
-      // Do something with payload
-      // For this guide, log payload to console
       const data: UserJSON = evt.data as UserJSON;
       const type = evt.type;
 
       if (type === "user.created") {
-        try {
-          await prisma.user.create({
-            data: {
-              clerkId: data.id,
-              email: data.email_addresses[0].email_address,
-              name: `${data.first_name} ${data.last_name}`.trim() || "User",
-              created_at: new Date(),
-            },
-          });
-          res.send("User Signed Up");
-          return;
-        } catch (error) {
-          // If user already exists (unique constraint violation)
-          if (error && error?.code && error?.code === "P2002") {
-            console.log("User already exists, skipping...");
-            res.status(200).json({ message: "User already exists" });
-            return;
-          }
-          throw error; // Other errors
-        }
+        await prisma.user.create({
+          data: {
+            clerkId: data.id,
+            email: data.email_addresses[0].email_address,
+            name: `${data.first_name} ${data.last_name}`.trim() || "User",
+            created_at: new Date(),
+          },
+        });
+        res.send("User Signed Up");
+        return;
       }
     } catch (err) {
       console.error("Error verifying webhook:", err);

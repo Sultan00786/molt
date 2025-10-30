@@ -1,3 +1,4 @@
+import { SignedOut, SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "../button/button";
 import Molt_Logo from "./Molt_Logo";
@@ -24,6 +25,9 @@ function NavbarSection() {
           <div className=" flex gap-2 items-center ">
             <Button variant="variant3" label="Login" />
             <Button variant="variant1" label="Sign Up" />
+            <SignOutButton>
+              <SignedOut />
+            </SignOutButton>
           </div>
         </div>
       </div>
