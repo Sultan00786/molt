@@ -7,6 +7,7 @@ import NavbarSection from "@/components/ui/custom/NavbarSection";
 import GradiantSpot from "@/components/ui/custom/GradiantSpot";
 import { usePathname } from "next/navigation";
 import ProjectNavbar from "@/components/ui/custom/ProjectNavbar";
+import { use } from "react";
 
 const geistSans = Noto_Sans({
   weight: "500",
@@ -23,28 +24,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
+  const pathArr = usePathname().split("/");
+  const pathname = pathArr.pop();
+  console.log("pathname: ", pathname);
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.className} ${
-          pathname.includes("/project") && "overflow-y-hidden"
+          pathname === "project" && "overflow-y-hidden"
         } overflow-x-hidden min-h-screen bg-richblack-990 font-inter relative -z-40 text-white`}
       >
         <Provider>
           <div className="relative h-full w-full overflow-hidden ">
-            {pathname.includes("/project") ? (
-              <ProjectNavbar />
-            ) : (
-              <NavbarSection />
-            )}
+            {pathname === "project" && <ProjectNavbar />}
+            {pathname === "" && <NavbarSection />}
             <div className="w-full h-full relative z-30 overflow-hidden">
               {children}
             </div>
           </div>
         </Provider>
         {/* gradiant spot */}
-        {!pathname.includes("/auth") && <GradiantSpot classNames="absolute" />}
+        {!(pathname === "auth") && <GradiantSpot classNames="absolute" />}
       </body>
     </html>
   );
