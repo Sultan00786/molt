@@ -44,7 +44,7 @@ export default function RootLayout({
           </div>
         </Provider>
         {/* gradiant spot */}
-        <GradiantSpot classNames="absolute" />
+        {!pathname.includes("/auth") && <GradiantSpot classNames="absolute" />}
       </body>
     </html>
   );
