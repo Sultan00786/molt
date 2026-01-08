@@ -17,6 +17,7 @@ type ButtonProps = {
     | "variant4"
     | "variant5"
     | "variant6";
+  onClick?: HTMLAttributes<HTMLElement>["onClick"];
 };
 
 export const Button: FC<ButtonProps> = ({
@@ -29,6 +30,7 @@ export const Button: FC<ButtonProps> = ({
   variant = "variant1",
   iconClassName = "",
   iconStrokeWidth,
+  onClick,
 }) => {
   return (
     <div
@@ -53,6 +55,7 @@ export const Button: FC<ButtonProps> = ({
         ${variant === "variant5" && "py-1 px-2"}
         ${variant === "variant6" && "py-1 px-1"}
       `}
+      onClick={onClick}
     >
       {isLabel && (
         <div
