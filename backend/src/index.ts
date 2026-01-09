@@ -1,15 +1,12 @@
+import { clerkMiddleware, UserJSON } from "@clerk/express";
 import { GoogleGenAI } from "@google/genai";
+import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express } from "express";
-import { templateCreate } from "./controller/template";
-import { chat } from "./controller/chat";
-import cors from "cors";
-
-export type ModelType =
-  | "gemini-2.0-flash"
-  | "gemini-2.0-flash-lite"
-  | "gemini-2.0-flash-8b"
-  | "gemini-1.5-flash";
+import { chatRouter } from "./routes/chat";
+import { projectRouter } from "./routes/project";
+import { verifyWebhook } from "@clerk/express/webhooks";
 
 dotenv.config();
 const app: Express = express();
@@ -31,8 +28,8 @@ app.use(express.json());
 // };
 
 app.use(cors());
-
-export type MessageType = { role: string; content: string }[];
+app.use(clerkMiddleware());
+export const prisma = new PrismaClient();
 
 export const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -40,9 +37,37 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
   return;
 });
+app.post(
+  "/api/webhooks",
+  express.raw({ type: "application/json" }),
+  async (req, res) => {
+    try {
+      const evt = await verifyWebhook(req);
+      const data: UserJSON = evt.data as UserJSON;
+      const type = evt.type;
 
-app.post("/template", templateCreate);
-app.post("/chat", chat);
+      if (type === "user.created") {
+        await prisma.user.create({
+          data: {
+            clerkId: data.id,
+            email: data.email_addresses[0].email_address,
+            name: `${data.first_name} ${data.last_name}`.trim() || "User",
+            created_at: new Date(),
+          },
+        });
+        res.send("User Signed Up");
+        return;
+      }
+    } catch (err) {
+      console.error("Error verifying webhook:", err);
+      res.status(400).send("Error verifying webhook");
+      return;
+    }
+  }
+);
+
+app.use("/project", projectRouter);
+app.use("/chat", chatRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

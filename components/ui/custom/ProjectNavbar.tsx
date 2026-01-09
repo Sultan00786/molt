@@ -21,10 +21,6 @@ function ProjectNavbar() {
             iconWidth={28}
             iconHeight={28}
           />
-          <div className=" flex gap-2 items-center ">
-            <Button variant="variant3" label="Login" />
-            <Button variant="variant1" label="Sign Up" />
-          </div>
         </div>
       </div>
       <div className="bg-gradient-to-r from-[#8A919980] to-[#2E3133] w-full h-[1px]"></div>

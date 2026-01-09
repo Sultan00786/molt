@@ -1,25 +1,8 @@
-import { Icon, IconName } from "@/components/icons";
-import { FC, HTMLAttributes } from "react";
+import { Icon } from "@/components/icons";
+import { cn } from "@/lib/utils";
+import { ButtonProps } from "@/types/props/components/botton";
 
-type ButtonProps = {
-  label?: string;
-  iconWidth?: number;
-  iconHeight?: number;
-  iconStrokeWidth?: number;
-  iconName?: IconName;
-  iconClassName?: HTMLAttributes<HTMLElement>["className"];
-  isLabel?: boolean;
-  isIcon?: boolean;
-  variant?:
-    | "variant1"
-    | "variant2"
-    | "variant3"
-    | "variant4"
-    | "variant5"
-    | "variant6";
-};
-
-export const Button: FC<ButtonProps> = ({
+export function Button({
   label,
   iconWidth,
   iconHeight,
@@ -29,48 +12,40 @@ export const Button: FC<ButtonProps> = ({
   variant = "variant1",
   iconClassName = "",
   iconStrokeWidth,
-}) => {
+  onClick,
+  className,
+}: ButtonProps) {
   return (
     <div
-      className={`
-        w-fit flex items-center gap-[10px] cursor-pointer rounded-[5px] transition duration-200
-        ${
-          variant === "variant1" &&
-          "bg-richblue-500/80 hover:bg-richblue-500 py-1 px-2 "
-        }
-        ${
-          variant === "variant2" &&
-          "bg-richblue-500/80 hover:bg-richblue-500 py-1 px-1"
-        }
-        ${
-          variant === "variant3" &&
-          " bg-richblack-500/25 hover:bg-richblack-500/50 py-1 px-2"
-        }
-        ${
-          variant === "variant4" &&
-          "bg-richblack-500/25 hover:bg-richblack-500/50 py-1 px-1"
-        }
-        ${variant === "variant5" && "py-1 px-2"}
-        ${variant === "variant6" && "py-1 px-1"}
-      `}
+      className={cn(
+        "w-fit flex items-center justify-center gap-[10px] cursor-pointer rounded-[5px] transition duration-200",
+        variant === "variant1" &&
+          "bg-richblue-500/80 hover:bg-richblue-500 py-1 px-2 ",
+        variant === "variant2" &&
+          "bg-richblue-500/80 hover:bg-richblue-500 py-1 px-1",
+        variant === "variant3" &&
+          " bg-richblack-500/25 hover:bg-richblack-500/50 py-1 px-2",
+        variant === "variant4" &&
+          "bg-richblack-500/25 hover:bg-richblack-500/50 py-1 px-1",
+        variant === "variant5" && "py-1 px-2",
+        variant === "variant6" && "py-1 px-1",
+        className
+      )}
+      onClick={onClick}
     >
       {isLabel && (
         <div
-          className={` 
-            text-white font-inter
-            ${
-              (variant === "variant1" ||
-                variant === "variant3" ||
-                variant === "variant5") &&
-              "text-body2"
-            }
-            ${
-              (variant === "variant2" ||
-                variant === "variant4" ||
-                variant === "variant6") &&
+          className={cn(
+            " text-white font-inter text-center ",
+            (variant === "variant1" ||
+              variant === "variant3" ||
+              variant === "variant5") &&
+              "text-body2",
+            (variant === "variant2" ||
+              variant === "variant4" ||
+              variant === "variant6") &&
               "text-body3"
-            }
-          `}
+          )}
         >
           {label}
         </div>
@@ -95,4 +70,8 @@ export const Button: FC<ButtonProps> = ({
       )}
     </div>
   );
-};
+}
+
+// export function OAuthButton () {
+
+// }

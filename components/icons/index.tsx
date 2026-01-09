@@ -18,9 +18,10 @@ import {
   ThumbsDown,
   ThumbsUp,
 } from "lucide-react";
-import { BsStars } from "react-icons/bs";
+import { BsGoogle, BsStars } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
-import { IoEarth, IoLogoGithub } from "react-icons/io5";
+import { IoEarth, IoLogoGithub, IoLogoGoogle } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
 
 export const iconsObj = {
   FolderOpen: FolderOpen,
@@ -45,6 +46,8 @@ export const iconsObj = {
   BsStars: BsStars,
   IoEarth: IoEarth,
   IoLogoGithub: IoLogoGithub,
+  FcGoogle: FcGoogle,
+  IoLogoGoogle: IoLogoGoogle,
 };
 
 export type IconName = keyof typeof iconsObj;
@@ -75,7 +78,9 @@ export const Icon = ({
         // for lucide
         width={w ? w : 16}
         height={h ? h : 16}
-        strokeWidth={strokeWidth ? strokeWidth : 1}
+        strokeWidth={
+          strokeWidth == 0 ? undefined : strokeWidth ? strokeWidth : 1
+        }
         // for react-icon
         style={{
           width: `${w}px`,
@@ -84,6 +89,6 @@ export const Icon = ({
         }}
         className={className}
       />
-      </div>
+    </div>
   );
 };
