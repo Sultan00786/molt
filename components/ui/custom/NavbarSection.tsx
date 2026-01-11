@@ -51,8 +51,8 @@ function AuthButtons() {
         label="Sign Up"
         onClick={() => authRouterHandler()}
       />
-      <SignOutButton>
-        <SignedOut />
+      <SignOutButton redirectUrl="/">
+        <Button variant="variant4" label="Sign Out" />
       </SignOutButton>
     </div>
   );
