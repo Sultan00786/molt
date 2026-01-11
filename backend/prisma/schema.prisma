@@ -13,6 +13,7 @@ model User {
   name       String
   clerkId    String    @unique
   created_at DateTime  @default(now())
+  image_url  String?
   project    Project[]
 }
 
