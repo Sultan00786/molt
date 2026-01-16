@@ -1,59 +1,18 @@
-import { clerkMiddleware, UserJSON } from "@clerk/express";
+import { clerkMiddleware } from "@clerk/express";
 import { GoogleGenAI } from "@google/genai";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express } from "express";
+import { clerkWebhook } from "./controller/auth";
 import { chatRouter } from "./routes/chat";
 import { projectRouter } from "./routes/project";
-import { verifyWebhook } from "@clerk/express/webhooks";
-import { prisma } from "./util/prisma.util";
 
 dotenv.config();
 const app: Express = express();
 app.post(
   "/api/webhooks",
   express.raw({ type: "application/json" }),
-  async (req, res) => {
-    try {
-      const evt = await verifyWebhook(req);
-      const data: UserJSON = evt.data as UserJSON;
-      const type = evt.type;
-
-      console.log("Event:", type);
-      console.log("Data:", data);
-      console.log("Event;", evt);
-      if (
-        !data ||
-        !data.email_addresses ||
-        !data.email_addresses[0] ||
-        !data.email_addresses[0].email_address ||
-        !data.first_name ||
-        !data.last_name ||
-        !data.created_at ||
-        !data.image_url
-      ) {
-        res.status(400).json({ success: false, message: "Invalid user data" });
-      }
-
-      if (type === "user.created") {
-        await prisma.user.create({
-          data: {
-            clerkId: data.id,
-            email: data.email_addresses[0].email_address,
-            name: `${data.first_name} ${data.last_name}`.trim() || "User",
-            created_at: new Date(data.created_at),
-            image_url: data.image_url,
-          },
-        });
-      }
-      res.status(200).json({ success: true, message: "Webhook verified" });
-      return;
-    } catch (err) {
-      console.error("Error verifying webhook:", err);
-      res.status(400).send("Error verifying webhook");
-      return;
-    }
-  }
+  clerkWebhook
 );
 app.use(express.json());
 
