@@ -1,9 +1,9 @@
 import { UserJSON } from "@clerk/express";
-import { verifyWebhook } from "@clerk/express/dist/webhooks";
+import { verifyWebhook } from "@clerk/express/webhooks";
 import { prisma } from "../util/prisma.util";
-import { Request, Response } from "express";
+import { Request as ExpressRequest, Response } from "express";
 
-export async function clerkWebhook(req: Request, res: Response) {
+export async function clerkWebhook(req: ExpressRequest, res: Response) {
   try {
     const evt = await verifyWebhook(req);
     const data: UserJSON = evt.data as UserJSON;
