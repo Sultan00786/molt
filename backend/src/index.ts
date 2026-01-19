@@ -6,12 +6,16 @@ import express, { Express } from "express";
 import { clerkWebhook } from "./controller/auth";
 import { chatRouter } from "./routes/chat";
 import { projectRouter } from "./routes/project";
+import { verifyClerkWebhook } from "./middleware/auth";
 
 dotenv.config();
 const app: Express = express();
+
+// clerk webhook must be first before express.json()
 app.post(
   "/api/webhooks",
   express.raw({ type: "application/json" }),
+  verifyClerkWebhook,
   clerkWebhook
 );
 app.use(express.json());

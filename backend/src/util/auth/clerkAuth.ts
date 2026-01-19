@@ -1,40 +1,29 @@
-import { Response } from "express";
-import { prisma } from "../prisma.util";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { UserJSON } from "@clerk/express";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { prisma } from "../prisma.util";
 
-export async function deleteClerkUser(clerkId: string, res: Response) {
+export async function deleteClerkUser(clerkId: string) {
   try {
     await prisma.user.delete({
       where: {
         clerkId: clerkId,
       },
     });
+    return null;
   } catch (error: PrismaClientKnownRequestError | unknown) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
-        console.log("User not found");
-        res.status(400).json({ success: false, message: "User not found" });
-        return;
+        console.error("User not found");
+        return error.code;
       }
     }
+    console.error("Error deleting user:", error);
+    return null;
   }
 }
 
-export async function createClerkUser(data: UserJSON, res: Response) {
+export async function createClerkUser(data: UserJSON) {
   try {
-    if (
-      !data ||
-      !data.email_addresses ||
-      !data.email_addresses[0] ||
-      !data.email_addresses[0].email_address ||
-      !data.first_name ||
-      !data.last_name ||
-      !data.created_at ||
-      !data.image_url
-    ) {
-      res.status(400).json({ success: false, message: "Invalid user data" });
-    }
     await prisma.user.create({
       data: {
         clerkId: data.id,
@@ -44,17 +33,15 @@ export async function createClerkUser(data: UserJSON, res: Response) {
         image_url: data.image_url,
       },
     });
-    return;
+    return null;
   } catch (error: PrismaClientKnownRequestError | unknown) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         console.log("User already exists");
-        res
-          .status(400)
-          .json({ success: false, message: "User already exists" });
-        return;
+        return error.code;
       }
     }
-    return;
+    console.error("Error while creating user:", error);
+    return null;
   }
 }
