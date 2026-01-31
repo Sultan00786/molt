@@ -1,13 +1,12 @@
 "use client";
 // import type { Metadata } from "next";
+import GradiantSpot from "@/components/ui/custom/GradiantSpot";
+import NavbarSection from "@/components/ui/custom/NavbarSection";
+import ProjectNavbar from "@/components/ui/custom/ProjectNavbar";
 import { Noto_Sans } from "next/font/google";
+import { usePathname } from "next/navigation";
 import "./globals.css";
 import Provider from "./provider";
-import NavbarSection from "@/components/ui/custom/NavbarSection";
-import GradiantSpot from "@/components/ui/custom/GradiantSpot";
-import { usePathname } from "next/navigation";
-import ProjectNavbar from "@/components/ui/custom/ProjectNavbar";
-import { use } from "react";
 
 const geistSans = Noto_Sans({
   weight: "500",

@@ -5,12 +5,15 @@ import AuthPageGradiant from "@/components/ui/custom/AuthPageGradiant";
 import Molt_Logo from "@/components/ui/custom/Molt_Logo";
 import { Input } from "@/components/ui/input/input";
 import { useSignIn } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Auth() {
   return (
     <div className="h-screen pt-[112px] relative ">
       <div className="w-full h-full flex flex-col items-center gap-6">
-        <Molt_Logo size="large" />
+        <Link href="/">
+          <Molt_Logo size="large" />
+        </Link>
         <MainSection />
       </div>
       <AuthPageGradiant />
@@ -46,14 +49,22 @@ function OAuthButtons() {
       signIn.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/dashboard",
+        redirectUrlComplete: "/",
+      });
+  };
+  const signInWithGithub = () => {
+    if (signIn)
+      signIn.authenticateWithRedirect({
+        strategy: "oauth_github",
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/",
       });
   };
   return (
     <div className="flex flex-col gap-4">
       <Button
         variant="variant3"
-        label="Continue with google"
+        label="Continue with Google"
         onClick={signInWithGoogle}
         isIcon={true}
         iconName="IoLogoGoogle"
@@ -62,7 +73,7 @@ function OAuthButtons() {
       <Button
         variant="variant3"
         label="Continue with GitHub"
-        onClick={signInWithGoogle}
+        onClick={signInWithGithub}
         isIcon={true}
         iconName="IoLogoGithub"
         className="w-full h-11 flex flex-row-reverse"

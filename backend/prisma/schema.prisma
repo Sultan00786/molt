@@ -1,46 +1,51 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "./generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int   @id @default(autoincrement())
-  clerkId   String  @unique
-  email     String  @unique
-  name      String  
-  project   Project[]
-  created_at    DateTime
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  name       String
+  clerkId    String    @unique
+  created_at DateTime  @default(now())
+  image_url  String?
+  project    Project[]
 }
 
 model Project {
-  id            Int               @id @default(autoincrement())
-  name          String            @default("")
-  description   String    
-  created_at    DateTime          @default(now())
-  user_id       Int
-  owner         User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  file_message  File_Message[]
+  id                Int          @id @default(autoincrement())
+  name              String       @default("")
+  created_at        DateTime     @default(now())
+  user_id           Int
+  webcontainer_file String
+  chat              Chat[]
+  llm_action        LLM_Action[]
+  owner             User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
-model File_Message {
-  id            Int       @id @default(autoincrement())
-  content       String
-  step          Step?
-  sender        Sender
-  agent_name    Agent?
-  created_at    DateTime
-  project_id    Int
-  project       Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+model LLM_Action {
+  id         Int      @id @default(autoincrement())
+  content    String
+  step       Step?
+  sender     Sender
+  agent_name Agent?
+  created_at DateTime @default(now())
+  project_id Int
+  project    Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+}
+
+model Chat {
+  id         Int      @id @default(autoincrement())
+  content    String
+  sender     Sender
+  created_at DateTime @default(now())
+  project_id Int
+  project    Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
 }
 
 enum Sender {
@@ -62,4 +67,3 @@ enum Step {
   error
   output
 }
-
