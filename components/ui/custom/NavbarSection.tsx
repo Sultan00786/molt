@@ -1,11 +1,13 @@
 "use client";
-import { SignedOut, SignOutButton } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "../button/button";
 import Molt_Logo from "./Molt_Logo";
-import { useRouter } from "next/navigation";
+import { NavUser } from "./user/user";
 
 function NavbarSection() {
+  const { isSignedIn } = useUser();
   return (
     <div className="h-16 flex flex-col items-center justify-between  z-50">
       <div className=" w-full h-full flex items-center justify-between px-14">
@@ -16,14 +18,16 @@ function NavbarSection() {
           <Molt_Logo />
         </Link>
         <div className="flex gap-1">
-          <Button
-            variant="variant6"
-            isLabel={false}
-            isIcon={true}
-            iconName="IoLogoGithub"
-            iconWidth={28}
-            iconHeight={28}
-          />
+          {!isSignedIn && (
+            <Button
+              variant="variant6"
+              isLabel={false}
+              isIcon={true}
+              iconName="IoLogoGithub"
+              iconWidth={28}
+              iconHeight={28}
+            />
+          )}
           <AuthButtons />
         </div>
       </div>
@@ -36,24 +40,26 @@ export default NavbarSection;
 
 function AuthButtons() {
   const router = useRouter();
+  const { user, isSignedIn } = useUser();
   function authRouterHandler() {
     router.push("/auth");
   }
   return (
     <div className=" flex gap-2 items-center ">
-      <Button
-        variant="variant3"
-        label="Login"
-        onClick={() => authRouterHandler()}
-      />
-      <Button
-        variant="variant1"
-        label="Sign Up"
-        onClick={() => authRouterHandler()}
-      />
-      <SignOutButton redirectUrl="/">
-        <Button variant="variant4" label="Sign Out" />
-      </SignOutButton>
+      {isSignedIn ? (
+        <div className="flex gap-2">
+          <NavUser imageUrl={user.imageUrl} />
+          <SignOutButton>
+            <Button variant="variant4" label="Sign Out" />
+          </SignOutButton>
+        </div>
+      ) : (
+        <Button
+          variant="variant4"
+          label="Sign In"
+          onClick={authRouterHandler}
+        />
+      )}
     </div>
   );
 }

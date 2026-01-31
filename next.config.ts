@@ -1,24 +1,24 @@
-// https://nextjs.org/docs/api-reference/next.config.js/introduction
 module.exports = {
+  reactStrictMode: true,
+
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "require-corp",
-          },
-          {
-            key: "Cross-Origin-Opener-Policy",
-            value: "same-origin",
-          },
+          { key: "Cross-Origin-Embedder-Policy", value: "require-corp" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
         ],
       },
     ];
   },
-  reactStrictMode: true,
+
   images: {
-    domains: ["images.unsplash.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
   },
 };
